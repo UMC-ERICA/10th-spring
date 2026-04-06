@@ -10,11 +10,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.server.domain.member.entity.enums.AccMethod;
 import umc.server.domain.member.entity.enums.MissionStatus;
+import umc.server.global.common.BaseEntity;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Mission {
+public class Mission extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

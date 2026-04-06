@@ -12,11 +12,12 @@ import umc.server.domain.member.entity.enums.Gender;
 import umc.server.domain.member.entity.enums.MemberRole;
 import umc.server.domain.member.entity.enums.MemberStatus;
 import umc.server.domain.member.entity.enums.LoginType;
+import umc.server.global.common.BaseEntity;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
