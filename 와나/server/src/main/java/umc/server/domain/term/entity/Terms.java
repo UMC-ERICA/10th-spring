@@ -1,4 +1,4 @@
-package umc.server.domain.restaurant.entity;
+package umc.server.domain.term.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,27 +7,24 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import umc.server.domain.restaurant.entity.enums.FoodCategory;
+import org.w3c.dom.Text;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Restaurant {
+public class Terms {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    private float score;
+    private String content;
 
-    private Restaurant(String name) {
-        this.name = name;
-        this.score = 0.0f;
+    private Terms(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
-        public static Restaurant create(String name) {
-            return new Restaurant(name);
-        }
 }
