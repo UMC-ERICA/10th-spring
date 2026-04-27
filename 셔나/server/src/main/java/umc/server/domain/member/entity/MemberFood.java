@@ -14,7 +14,6 @@ import umc.server.global.entity.BaseEntity;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "member_food")
-
 public class MemberFood extends BaseEntity {
 
     @Id
