@@ -1,4 +1,10 @@
 package umc.server.domain.member.repository;
 
-public interface MemberRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import umc.server.domain.member.entity.Member;
+
+@Repository
+public interface MemberRepository extends JpaRepository<Member, Long> {
+
 }
