@@ -1,4 +1,10 @@
 package umc.server.domain.mission.dto.response;
 
-public class MissionResponse {
+public record MissionResponse(
+        Long missionId,
+        String title,
+        String content,
+        Integer rewardPoint,
+        String status
+) {
 }
