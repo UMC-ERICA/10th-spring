@@ -44,4 +44,8 @@ public class MemberMission extends BaseEntity {
     @OneToMany(mappedBy = "memberMission", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ReviewRequestAlarm> reviewRequestAlarmList = new ArrayList<>();
+
+    public void missionComplete() {
+        this.missionStatus = MissionStatus.COMPLETED;
+    }
 }
