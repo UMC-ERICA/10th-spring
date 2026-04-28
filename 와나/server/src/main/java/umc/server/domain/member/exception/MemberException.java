@@ -1,4 +1,10 @@
 package umc.server.domain.member.exception;
 
-public class MemberException extends {
+import umc.server.global.exception.GlobalException;
+import umc.server.global.exception.code.BaseCode;
+
+public class MemberException extends GlobalException {
+    public MemberException(BaseCode baseCode) {
+        super(baseCode);
+    }
 }

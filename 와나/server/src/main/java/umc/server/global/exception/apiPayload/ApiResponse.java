@@ -1,4 +1,4 @@
-package umc.server.global.exception;
+package umc.server.global.exception.apiPayload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
