@@ -27,4 +27,12 @@ public class MemberController {
         return ApiResponse.onSuccess(code,null); // service 생성 후 넣을 예정
     }
 
+    @GetMapping("/me/address")
+    public ApiResponse<MemberResDTO.GetAddress> getAddress(
+            @RequestBody MemberReqDTO.GetAddress dto
+    ){
+        BaseSuccessCode code = MemberSuccessCode.ADDRESS_FOUND;
+        return ApiResponse.onSuccess(code,null);
+    }
+
 }

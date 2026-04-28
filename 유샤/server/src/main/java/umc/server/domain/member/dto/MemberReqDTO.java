@@ -18,4 +18,8 @@ public class MemberReqDTO {
             Gender gender,
             Date birth
     ){}
+
+    public record GetAddress(
+            Long id
+    ){}
 }

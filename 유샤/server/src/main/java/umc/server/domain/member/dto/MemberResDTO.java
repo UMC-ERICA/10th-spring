@@ -17,4 +17,10 @@ public class MemberResDTO {
     public record SignUp(
             Long id
     ){}
+
+    @Builder
+    public record GetAddress(
+            Long addressId,
+            String regionSub
+    ){}
 }
