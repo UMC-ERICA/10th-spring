@@ -18,4 +18,8 @@ public class MissionResDTO {
             Long missionId,
             String title
     ){}
+
+    public record complete(
+            Long missionId
+    ){}
 }

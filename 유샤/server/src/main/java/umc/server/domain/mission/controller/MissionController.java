@@ -29,4 +29,12 @@ public class MissionController {
         return ApiResponse.onSuccess(code,null);
     }
 
+    @PatchMapping("/{member-mission-id}/complete")
+    public ApiResponse<MissionResDTO.complete> complete(
+            @PathVariable("member-mission-id") Long mmId
+    ){
+        BaseSuccessCode code = MissionSuccessCode.MISSION_COMPLETE;
+        return ApiResponse.onSuccess(code,null);
+    }
+
 }

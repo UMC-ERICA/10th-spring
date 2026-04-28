@@ -14,7 +14,10 @@ public enum MissionSuccessCode implements BaseSuccessCode {
             "성공적으로 미션을 조회했습니다."),
     PROGRESS_FOUND(HttpStatus.OK,
             "MISSION200_2",
-            "성공적으로 지역미션진척도를 조회했습니다."),;
+            "성공적으로 지역미션진척도를 조회했습니다."),
+    MISSION_COMPLETE(HttpStatus.OK,
+            "MISSION200_3",
+            "성공적으로 미션이 수정되었습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
