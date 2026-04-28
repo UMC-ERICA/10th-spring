@@ -1,7 +1,6 @@
 package umc.server.domain.member.controller;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.dto.MemberReqDTO;
