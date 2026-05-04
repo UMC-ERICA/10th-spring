@@ -3,7 +3,7 @@ package umc.server.domain.member.dto;
 import umc.server.domain.member.enums.Gender;
 import umc.server.domain.member.enums.Provider;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class MemberReqDTO {
 
@@ -16,7 +16,7 @@ public class MemberReqDTO {
             String socialUid,
             String name,
             Gender gender,
-            Date birth
+            LocalDate birth
     ){}
 
     public record GetAddress(
