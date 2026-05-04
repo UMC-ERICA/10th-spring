@@ -2,7 +2,7 @@ package umc.server.domain.mission.dto;
 
 public class MissionReqDTO {
 
-    public record getProgress(
+    public record GetProgress(
        Long addressId
     ){}
 }

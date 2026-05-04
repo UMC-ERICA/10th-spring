@@ -2,7 +2,6 @@ package umc.server.domain.mission.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import umc.server.domain.mission.dto.MissionReqDTO;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.exception.code.MissionSuccessCode;
 import umc.server.global.apiPayload.ApiResponse;
@@ -14,7 +13,7 @@ import umc.server.global.apiPayload.code.BaseSuccessCode;
 public class MissionController {
 
     @GetMapping
-    public ApiResponse<MissionResDTO.getMissionList> getMissionList(
+    public ApiResponse<MissionResDTO.GetMissionList> getMissionList(
             @RequestParam("isCompleted") Boolean isCompleted
     ){
         BaseSuccessCode code = MissionSuccessCode.OK;
@@ -30,7 +29,7 @@ public class MissionController {
     }
 
     @PatchMapping("/{member-mission-id}/complete")
-    public ApiResponse<MissionResDTO.complete> complete(
+    public ApiResponse<MissionResDTO.Complete> complete(
             @PathVariable("member-mission-id") Long mmId
     ){
         BaseSuccessCode code = MissionSuccessCode.MISSION_COMPLETE;

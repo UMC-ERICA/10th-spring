@@ -1,16 +1,15 @@
 package umc.server.domain.mission.dto;
 
-import umc.server.domain.mission.entity.Mission;
 
 import java.util.List;
 
 public class MissionResDTO {
 
-    public record getProgress(
+    public record GetProgress(
             Integer progress
     ){}
 
-    public record getMissionList(
+    public record GetMissionList(
             List<MissionCard> missionList
     ){}
 
@@ -19,7 +18,7 @@ public class MissionResDTO {
             String title
     ){}
 
-    public record complete(
+    public record Complete(
             Long missionId
     ){}
 }
