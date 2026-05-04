@@ -22,8 +22,8 @@ public class MissionController {
     }
 
     @GetMapping("/region")
-    public ApiResponse<MissionResDTO.getProgress> getProgress(
-            @RequestBody MissionReqDTO.getProgress dto
+    public ApiResponse<MissionResDTO.GetProgress> getProgress(
+            @RequestParam Long addressId
     ){
         BaseSuccessCode code = MissionSuccessCode.PROGRESS_FOUND;
         return ApiResponse.onSuccess(code,null);
