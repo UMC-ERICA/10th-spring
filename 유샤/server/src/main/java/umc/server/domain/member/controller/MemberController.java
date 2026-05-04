@@ -14,7 +14,7 @@ import umc.server.global.apiPayload.code.BaseSuccessCode;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/users")
+@RequestMapping("/api/users")
 public class MemberController {
 
     private final MemberService memberService;

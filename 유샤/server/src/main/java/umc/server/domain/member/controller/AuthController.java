@@ -13,7 +13,7 @@ import umc.server.global.apiPayload.code.BaseSuccessCode;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @PostMapping("/sign-up")

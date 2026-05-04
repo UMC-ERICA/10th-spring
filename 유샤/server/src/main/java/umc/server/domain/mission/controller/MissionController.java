@@ -10,7 +10,7 @@ import umc.server.global.apiPayload.code.BaseSuccessCode;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/missions")
+@RequestMapping("/api/missions")
 public class MissionController {
 
     @GetMapping
