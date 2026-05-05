@@ -9,6 +9,7 @@ import umc.server.domain.member.entity.Food;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.entity.MemberFood;
 import umc.server.domain.member.entity.TermsAgreed;
+import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.exception.code.FoodErrorCode;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.FoodRepository;
@@ -35,7 +36,7 @@ public class MemberService {
         List<MemberFood> memberFoodList = request.memberPreferFoodIds().stream()
                 .map(foodId -> {
                     Food food = foodRepository.findById(foodId)
-                            .orElseThrow(() -> new GeneralException(FoodErrorCode.FOOD_NOT_FOUND));
+                            .orElseThrow(() -> new MemberException(FoodErrorCode.FOOD_NOT_FOUND));
 
                     return MemberFood.builder()
                             .member(member)
@@ -52,7 +53,7 @@ public class MemberService {
 
     public MemberResDTO.GetProfileResultDTO getProfile(Long memberId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new GeneralException(MemberErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
         return MemberConverter.toGetProfileResultDTO(member);
     }
