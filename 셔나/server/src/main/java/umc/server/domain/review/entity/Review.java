@@ -47,4 +47,18 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ReviewPhoto> reviewPhotoList = new ArrayList<>();
+
+    // 연관관계 편의 메서드
+    public void addReviewPhoto(ReviewPhoto photo) {
+        reviewPhotoList.add(photo);
+        photo.setReview(this);
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 }
