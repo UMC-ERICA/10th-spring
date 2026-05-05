@@ -20,6 +20,8 @@ public class MissionResponseDTO {
     public record MissionListDTO(
             List<MissionPreviewDTO> missionList,
             Integer listSize,
+            Integer totalPage,
+            Long totalElements,
             Boolean isFirst,
             Boolean isLast
     ) {
