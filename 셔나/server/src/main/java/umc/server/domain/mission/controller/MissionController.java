@@ -15,8 +15,8 @@ public class MissionController {
 
     private final MissionService missionService;
 
-    @GetMapping
-    public ApiResponse<MissionResDTO.GetMissionListDTO> getMissionList(
+    @GetMapping("/me")
+    public ApiResponse<MissionResDTO.GetMissionListDTO> findMissionList(
             @RequestParam(name = "memberId") Long memberId,
             @RequestParam(name = "status") MissionStatus status
     ) {
@@ -29,5 +29,12 @@ public class MissionController {
             @RequestParam(name = "memberId") Long memberId
     ) {
         return ApiResponse.onSuccess(MissionSuccessCode.MISSION_STATUS_UPDATED, missionService.updateMissionCompleted(memberId, missionId));
+    }
+
+    @GetMapping("/home/{storeRegion}")
+    public ApiResponse<MissionResDTO.GetHomeMissionListDTO> findHomeMissionList(
+            @PathVariable String storeRegion
+    ) {
+        return ApiResponse.onSuccess(MissionSuccessCode.MISSION_FOUND, missionService.getHomeMissionList(storeRegion));
     }
 }

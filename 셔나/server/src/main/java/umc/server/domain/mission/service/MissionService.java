@@ -6,11 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.mission.converter.MissionConverter;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.MemberMission;
+import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.enums.MissionStatus;
 import umc.server.domain.mission.exception.MissionException;
 import umc.server.domain.mission.exception.code.MissionErrorCode;
 import umc.server.domain.mission.repository.MemberMissionRepository;
-import umc.server.global.apiPayload.exception.GeneralException;
+import umc.server.domain.mission.repository.MissionRepository;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class MissionService {
 
     private final MemberMissionRepository memberMissionRepository;
+    private final MissionRepository missionRepository;
 
     public MissionResDTO.GetMissionListDTO getMissionList(Long memberId, MissionStatus missionStatus) {
         List<MemberMission> memberMissionList = memberMissionRepository.findAllByMemberIdAndMissionStatus(memberId, missionStatus);
@@ -35,5 +37,11 @@ public class MissionService {
         memberMission.missionComplete();
 
         return MissionConverter.toUpdateMissionStatusResultDTO(memberMission);
+    }
+
+    public MissionResDTO.GetHomeMissionListDTO getHomeMissionList(String regionName) {
+        List<Mission> missionList = missionRepository.findAllByRegionName(regionName);
+
+        return MissionConverter.toGetHomeMissionListDTO(missionList);
     }
 }
