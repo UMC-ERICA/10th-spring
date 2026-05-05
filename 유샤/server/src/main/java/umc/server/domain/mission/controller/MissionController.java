@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.exception.code.MissionSuccessCode;
+import umc.server.domain.mission.service.MissionService;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.BaseSuccessCode;
 
@@ -12,12 +13,16 @@ import umc.server.global.apiPayload.code.BaseSuccessCode;
 @RequestMapping("/api/missions")
 public class MissionController {
 
+    public final MissionService missionService;
+
     @GetMapping
     public ApiResponse<MissionResDTO.GetMissionList> getMissionList(
             @RequestParam("isCompleted") Boolean isCompleted
     ){
+        MissionResDTO.GetMissionList result = missionService.getMissionList(isCompleted);
         BaseSuccessCode code = MissionSuccessCode.OK;
-        return ApiResponse.onSuccess(code,null);
+
+        return ApiResponse.onSuccess(code,result);
     }
 
     @GetMapping("/region")
