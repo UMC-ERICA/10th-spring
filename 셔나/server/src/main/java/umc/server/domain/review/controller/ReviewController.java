@@ -2,10 +2,7 @@ package umc.server.domain.review.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import umc.server.domain.review.dto.ReviewReqDTO;
 import umc.server.domain.review.dto.ReviewResDTO;
 import umc.server.domain.review.exception.code.ReviewSuccessCode;
@@ -24,5 +21,12 @@ public class ReviewController {
             @RequestBody @Valid ReviewReqDTO.CreateReviewDTO request
     ) {
         return ApiResponse.onSuccess(ReviewSuccessCode.CREATED, reviewService.createReview(request));
+    }
+
+    @GetMapping("/{storeId}")
+    public ApiResponse<ReviewResDTO.GetReviewListDTO> findReviewList(
+            @PathVariable Long storeId
+    ) {
+        return ApiResponse.onSuccess(ReviewSuccessCode.OK, reviewService.getReviewList(storeId));
     }
 }
