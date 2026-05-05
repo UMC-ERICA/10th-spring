@@ -8,4 +8,11 @@ public class MemberResponseDTO {
             LocalDateTime createdAt
     ) {
     }
+
+    public record MyPageDTO(
+            String username,
+            String email,
+            Integer currentPoint
+    ) {
+    }
 }
