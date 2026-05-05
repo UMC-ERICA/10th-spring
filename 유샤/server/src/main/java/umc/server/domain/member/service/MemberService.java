@@ -2,6 +2,7 @@ package umc.server.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import umc.server.domain.common.entity.Address;
 import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.MemberResDTO;
 import umc.server.domain.member.entity.Member;
@@ -19,4 +20,13 @@ public class MemberService {
 
         return MemberConverter.toGetInfoResult(memberMe);
     };
+
+    public MemberResDTO.GetAddress getAddress(){
+
+        Member member = memberRepository.findById(1L).orElseThrow();
+
+        Address address = member.getAddress();
+
+        return MemberConverter.toGetAddressResult(address);
+    }
 }

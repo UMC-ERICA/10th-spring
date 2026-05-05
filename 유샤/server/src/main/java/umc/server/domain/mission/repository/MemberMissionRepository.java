@@ -1,16 +1,16 @@
 package umc.server.domain.mission.repository;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import umc.server.domain.common.entity.Address;
 import umc.server.domain.mission.entity.Mission;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MissionRepository extends JpaRepository<Mission, Long> {
+public interface MemberMissionRepository extends JpaRepository<Mission, Long> {
 
     @Query("SELECT m FROM MemberMission mm " +
             "JOIN mm.mission m " +
@@ -35,4 +35,17 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             @Param("deadline") LocalDate deadline,
             @Param("lastMissionId") Long lastMissionId
     );
+
+    @Query("SELECT MOD(COUNT(mm), 10) " +
+            "FROM MemberMission mm " +
+            "JOIN mm.mission m " +
+            "JOIN m.store s " +
+            "JOIN s.address a "+
+            "WHERE mm.member.id = :memberId "+
+            "AND a.regionSub = :regionSub " +
+            "AND mm.isCompleted = true ")
+    Integer findRegionMissionProgress(
+            @Param("memberId") Long memberId,
+            @Param("regionSub") String regionSub);
+
 }

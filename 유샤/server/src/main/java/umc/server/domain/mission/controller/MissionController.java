@@ -29,8 +29,9 @@ public class MissionController {
     public ApiResponse<MissionResDTO.GetProgress> getProgress(
             @RequestParam Long addressId
     ){
+        MissionResDTO.GetProgress result = missionService.getProgress(addressId);
         BaseSuccessCode code = MissionSuccessCode.PROGRESS_FOUND;
-        return ApiResponse.onSuccess(code,null);
+        return ApiResponse.onSuccess(code,result);
     }
 
     @PatchMapping("/{member-mission-id}/complete")

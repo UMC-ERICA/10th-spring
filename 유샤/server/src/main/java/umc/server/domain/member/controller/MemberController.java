@@ -19,8 +19,8 @@ public class MemberController {
     public ApiResponse<MemberResDTO.GetInfo> getInfo(
             @RequestParam Long id
     ){
-        BaseSuccessCode code = MemberSuccessCode.OK;
         MemberResDTO.GetInfo result = memberService.getMe();
+        BaseSuccessCode code = MemberSuccessCode.OK;
 
         return ApiResponse.onSuccess(code,result); // service 생성 후 넣을 예정
     }
@@ -29,8 +29,9 @@ public class MemberController {
     public ApiResponse<MemberResDTO.GetAddress> getAddress(
             @RequestParam Long id
     ){
+        MemberResDTO.GetAddress result = memberService.getAddress();
         BaseSuccessCode code = MemberSuccessCode.ADDRESS_FOUND;
-        return ApiResponse.onSuccess(code,null);
+        return ApiResponse.onSuccess(code,result);
     }
 
 }

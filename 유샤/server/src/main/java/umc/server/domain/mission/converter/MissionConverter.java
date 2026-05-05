@@ -22,4 +22,12 @@ public class MissionConverter {
                 .missionList(missionCardList)
                 .build();
     }
+
+    public static MissionResDTO.GetProgress toGetProgressResult(
+            Integer progress
+    ){
+        return MissionResDTO.GetProgress.builder()
+                .progress(progress)
+                .build();
+    }
 }
