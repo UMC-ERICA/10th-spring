@@ -31,6 +31,7 @@ public class Member extends BaseEntity {
     private MemberStatus status;
     private MemberRole role;
     private boolean authentificatedPhone;
+    private String profileImageUrl;
 
     // 소셜로그인 관련 필드
     private LoginType socialType;

@@ -23,7 +23,6 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
-    private final RestaurantRepository restaurantRepository;
 
     public void createReview(Long memberId, Long missionId, CreateReviewRequest request) {
         Member member = findMemberById(memberId);
