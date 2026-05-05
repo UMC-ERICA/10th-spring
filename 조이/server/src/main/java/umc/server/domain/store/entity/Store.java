@@ -1,4 +1,4 @@
-package umc.server.domain.mission.entity;
+package umc.server.domain.store.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,39 +11,36 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.security.Timestamp;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import umc.server.domain.member.entity.Member;
+import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.review.entity.Review;
-import umc.server.domain.store.entity.Store;
 import umc.server.global.entity.BaseEntity;
 
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "mission")
-public class Mission extends BaseEntity {
-
+@Table(name = "store")
+public class Store extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "mission_info")
-    private String missionInfo;
+    @Column(name = "store_name", nullable = false)
+    private String storeName;
 
-    @Column(name = "deleted_at")
-    private Timestamp deletedAt;
+    @Column(name = "store_star")
+    private Double storeStar;
 
-    @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
-    private List<MemberMission> memberMissions;
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    private List<Mission> missions;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id")
-    private Store store;
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
+    private List<Review> reviews;
+
 
 }
