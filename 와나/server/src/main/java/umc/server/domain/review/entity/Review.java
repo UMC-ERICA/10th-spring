@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.server.domain.member.entity.Member;
@@ -34,6 +35,7 @@ public class Review extends BaseEntity {
     private String content;
 
     private float score;
+
 
     private Review(Member member, Restaurant restaurant, String content, float score) {
         this.member = member;
