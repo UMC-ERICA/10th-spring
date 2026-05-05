@@ -16,7 +16,7 @@ public class CommonExceptionAdvice {
     ) {
         BaseCode errorCode = e.getBaseCode();
         return ResponseEntity.status(errorCode.getHttpStatus())
-                .body(ApiResponse.faliure(errorCode, null));
+                .body(ApiResponse.failure(errorCode, null));
     }
 
     // 그 외의 정의되지 않은 모든 예외 처리
@@ -27,7 +27,7 @@ public class CommonExceptionAdvice {
 
         BaseCode code = CommonErrorCode.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(code.getHttpStatus())
-                .body(ApiResponse.faliure(
+                .body(ApiResponse.failure(
                                 code,
                                 ex.getMessage()
                         )

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import umc.server.domain.member.entity.enums.MemberMissionStatus;
@@ -46,7 +47,7 @@ public class MissionController {
     }
 
     // 홈화면 - 완료 미션 개수
-    @GetMapping("missions/my/count")
+    @GetMapping("/missions/my/count")
     public ApiResponse<GetMissionsCountResponse> getMissionCount(
             @RequestParam MemberMissionStatus memberMissionStatus
     ) {
@@ -58,7 +59,7 @@ public class MissionController {
     // 미션 성공 누르기
     @PatchMapping("/missions/{missionId}/success")
     public ApiResponse<Object> completeMission(
-            @RequestParam Long missionId
+            @PathVariable Long missionId
     ) {
         // 추후 Security를 통해 자신의 memberId를 가져옴. 지금은 임시로 1L 사용
         Long memberId = 1L;

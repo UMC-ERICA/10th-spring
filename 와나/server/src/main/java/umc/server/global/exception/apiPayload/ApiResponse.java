@@ -28,7 +28,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, baseCode.getCode(), baseCode.getMessage(), data);
     }
 
-    public static <T> ApiResponse<T> faliure(BaseCode baseCode, T data) {
-        return new ApiResponse<>(true, baseCode.getCode(), baseCode.getMessage(), data);
+    public static <T> ApiResponse<T> failure(BaseCode baseCode, T data) {
+        return new ApiResponse<>(false, baseCode.getCode(), baseCode.getMessage(), data);
     }
 }
