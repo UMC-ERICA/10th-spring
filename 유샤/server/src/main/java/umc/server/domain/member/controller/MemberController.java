@@ -20,7 +20,9 @@ public class MemberController {
             @RequestParam Long id
     ){
         BaseSuccessCode code = MemberSuccessCode.OK;
-        return ApiResponse.onSuccess(code,null); // service 생성 후 넣을 예정
+        MemberResDTO.GetInfo result = memberService.getMe();
+
+        return ApiResponse.onSuccess(code,result); // service 생성 후 넣을 예정
     }
 
     @GetMapping("/me/address")
