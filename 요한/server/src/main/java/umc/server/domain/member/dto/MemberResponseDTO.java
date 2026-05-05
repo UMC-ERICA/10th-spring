@@ -15,4 +15,11 @@ public class MemberResponseDTO {
             Integer currentPoint
     ) {
     }
+
+    public record HomeDTO(
+            String regionName,
+            Integer missionProgress,
+            umc.server.domain.mission.dto.MissionResponseDTO.MissionListDTO availableMissions
+    ) {
+    }
 }
