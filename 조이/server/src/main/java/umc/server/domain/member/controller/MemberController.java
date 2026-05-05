@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import umc.server.domain.member.dto.MemberReqDTO;
-import umc.server.domain.member.dto.MemberResDTO;
 import umc.server.domain.member.dto.MemberResDTO.JoinResDTO;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;

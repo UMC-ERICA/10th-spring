@@ -21,7 +21,7 @@ public class ReviewController {
     @PostMapping
     public ApiResponse<ReviewResDTO.CreateResDTO> createReview(
             @RequestBody ReviewReqDTO.CreateReviewReqDTO dto) {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
+        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, null);
     }
 
     //사장님 댓글 작성

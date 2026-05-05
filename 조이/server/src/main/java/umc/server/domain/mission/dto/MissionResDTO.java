@@ -7,13 +7,13 @@ public class MissionResDTO {
 
     public record MissionsResDTO(
             Long missionId,
-            String MissionInfo,
+            String missionInfo,
             Integer point,
             Long storeId,
             Status status
     ) {
     }
-    
+
     public record MissionsGetResDTO(
             List<MissionsResDTO> missions
     ) {
