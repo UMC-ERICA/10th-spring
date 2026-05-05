@@ -2,6 +2,8 @@ package umc.server.domain.review.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.review.converter.ReviewConverter;
 import umc.server.domain.review.dto.ReviewReqDTO;
 import umc.server.domain.review.dto.ReviewResDTO;
@@ -16,15 +18,18 @@ public class ReviewService {
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
+    private final MemberRepository memberRepository;
 
     public ReviewResDTO.PostReview createReview(
             Long storeId,
             ReviewReqDTO.PostReview dto
     ){
-        Store store = storeRepository.findById(storeId).orElse(null);
+        Store store = storeRepository.findById(storeId).orElseThrow();
+        Member member = memberRepository.findById(1L).orElseThrow();
 
         Review review = Review.builder()
                         .store(store)
+                        .member(member)
                         .content(dto.content())
                         .star(dto.star())
                         .build();
