@@ -1,4 +1,4 @@
-package umc.server.global;
+package umc.server.global.apiPayload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,9 +23,8 @@ public class ApiResponse<T> {
     private final String message;
 
     @JsonProperty("result")
-    private T result;
+    private final T result;
 
-    // 성공한 경우 - 기본 성공 코드 + result 있음
     public static <T> ApiResponse<T> onSuccess(T result) {
         return new ApiResponse<>(
                 true,
@@ -35,7 +34,6 @@ public class ApiResponse<T> {
         );
     }
 
-    // 성공한 경우 - 기본 성공 코드 + result 없음
     public static ApiResponse<Void> onSuccess() {
         return new ApiResponse<>(
                 true,
@@ -45,7 +43,6 @@ public class ApiResponse<T> {
         );
     }
 
-    // 성공한 경우 - 원하는 성공 코드 지정 + result 있음
     public static <T> ApiResponse<T> onSuccess(BaseSuccessCode code, T result) {
         return new ApiResponse<>(
                 true,
@@ -55,7 +52,6 @@ public class ApiResponse<T> {
         );
     }
 
-    // 성공한 경우 - 원하는 성공 코드 지정 + result 없음
     public static ApiResponse<Void> onSuccess(BaseSuccessCode code) {
         return new ApiResponse<>(
                 true,
@@ -65,7 +61,6 @@ public class ApiResponse<T> {
         );
     }
 
-    // 실패한 경우
     public static <T> ApiResponse<T> onFailure(BaseErrorCode code, T result) {
         return new ApiResponse<>(
                 false,

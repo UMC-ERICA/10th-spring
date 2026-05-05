@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import umc.server.domain.store.dto.response.StoreMissionResponse;
-import umc.server.global.ApiResponse;
+import umc.server.global.apiPayload.ApiResponse;
 
 import java.util.List;
 
