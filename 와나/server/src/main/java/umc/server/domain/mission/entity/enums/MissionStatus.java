@@ -1,4 +1,4 @@
-package umc.server.domain.member.entity.enums;
+package umc.server.domain.mission.entity.enums;
 
 public enum MissionStatus {
     IN_PROGRESS, ENDED

@@ -9,7 +9,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.server.domain.member.entity.enums.AccMethod;
-import umc.server.domain.member.entity.enums.MissionStatus;
+import umc.server.domain.mission.entity.enums.MissionStatus;
 import umc.server.global.common.BaseEntity;
 
 @Getter
