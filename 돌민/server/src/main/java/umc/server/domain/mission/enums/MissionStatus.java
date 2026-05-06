@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum MissionStatus {
 
-    READY("대기중"),
-    IN_PROGRESS("진행중"),
-    COMPLETE("완료");
+    READY("READY"),
+    IN_PROGRESS("IN_PROGRESS"),
+    COMPLETE("COMPLETE");
 
     private final String description;
 }
