@@ -15,15 +15,18 @@ import java.security.Timestamp;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.mission.entity.mapping.MemberMission;
+import umc.server.domain.mission.enums.Status;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.store.entity.Store;
 import umc.server.global.entity.BaseEntity;
 
 @Entity
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "mission")
@@ -38,6 +41,11 @@ public class Mission extends BaseEntity {
 
     @Column(name = "deleted_at")
     private Timestamp deletedAt;
+
+    @Column(name = "point")
+    private Integer point;
+    @Column(name = "status")
+    private Status status;
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissions;

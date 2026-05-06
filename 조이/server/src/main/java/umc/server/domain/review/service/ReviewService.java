@@ -7,8 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.review.converter.ReviewConverter;
 import umc.server.domain.review.dto.ReviewResDTO;
 import umc.server.domain.review.entity.Review;
+import umc.server.domain.review.exception.ReviewException;
+import umc.server.domain.review.exception.code.ReviewErrorCode;
 import umc.server.domain.review.repository.ReviewRepository;
 import umc.server.domain.store.entity.Store;
+import umc.server.domain.store.exception.StoreException;
+import umc.server.domain.store.exception.code.StoreErrorCode;
 import umc.server.domain.store.repository.StoreRepository;
 
 @Service
@@ -22,7 +26,7 @@ public class ReviewService {
 
         // 있는 가게인지 확인
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new RuntimeException("가게를 찾을 수 없습니다."));
+                .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
 
         List<Review> reviews = reviewRepository.findByStoreId(storeId);
 

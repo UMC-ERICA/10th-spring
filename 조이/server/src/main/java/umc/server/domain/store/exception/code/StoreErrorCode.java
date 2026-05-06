@@ -8,7 +8,7 @@ import umc.server.global.apiPayload.code.BaseErrorCode;
 @Getter
 @AllArgsConstructor
 public enum StoreErrorCode implements BaseErrorCode {
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE404_1", "가게가 존재하지 않습니다.");
+    STORE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE404_1", "가게가 존재하지 않습니다.");
     private final HttpStatus status;
     private final String message;
     private final String code;
