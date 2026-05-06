@@ -2,8 +2,8 @@ package umc.server.domain.review.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import umc.server.domain.review.entity.Review;
+import umc.server.domain.review.entity.Reply;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReplyRepository extends JpaRepository<Reply, Long> {
 }

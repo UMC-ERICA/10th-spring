@@ -14,7 +14,9 @@ import java.security.Timestamp;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import umc.server.domain.member.entity.mapping.MemberFood;
 import umc.server.domain.member.enums.Gender;
 import umc.server.domain.member.enums.IsActive;
@@ -27,6 +29,8 @@ import umc.server.global.entity.BaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member")
+@Getter
+@Setter
 public class Member extends BaseEntity {
 
     @Id
@@ -54,6 +58,9 @@ public class Member extends BaseEntity {
 
     @Column(name = "total_point")
     private Integer totalPoint;
+
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "is_active")
     @Enumerated(EnumType.STRING)
