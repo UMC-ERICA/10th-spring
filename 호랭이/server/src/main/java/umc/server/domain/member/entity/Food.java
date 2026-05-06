@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.server.domain.member.enums.FoodName;
 
 @Entity //테이블과 1:1 매핑된다
 @Getter
