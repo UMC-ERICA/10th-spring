@@ -10,42 +10,25 @@ import umc.server.global.apiPayload.code.GeneralSuccessCode;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/members") // 도메인에 맞게 경로 세분화
+@RequestMapping("/members")
 public class MemberController {
 
-    private final MemberService memberService;
-
-
-    @PostMapping("/me")
-    public ApiResponse<MemberResDTO.MemberInfoDTO> getInfo(
-            @RequestBody MemberReqDTO.GetInfo dto
-    ) {
-
-        return ApiResponse.onSuccess(memberService.getInfo(dto));
-    }
-
+    private final MemberService memberService; //스프링이 자동주입
 
     @GetMapping("/query-parameter")
     public ApiResponse<String> testQueryParameter(
-            @RequestParam(name = "query") String queryParameter
+            @RequestParam(name = "query") String queryParameter //url 뒤에 붙는 파라미터 값
     ) {
-        return ApiResponse.onSuccess(memberService.singleParameter(queryParameter));
+        return ApiResponse.isSuccess(memberService.singleParameter(queryParameter));
     }
 
-
-    @PostMapping("/request-body")
-    public ApiResponse<MemberResDTO.RequestBodyResultDTO> testRequestBody(
-            @RequestBody MemberReqDTO.RequestBody dto
-    ) {
-        return ApiResponse.onSuccess(memberService.requestBody(dto));
-    }
 
 
     @GetMapping("/{pathVariable}")
     public ApiResponse<String> testPathVariable(
             @PathVariable(name = "pathVariable") String pathVariable
     ) {
-        return ApiResponse.onSuccess(memberService.singleParameter(pathVariable));
+        return ApiResponse.isSuccess(memberService.singleParameter(pathVariable));
     }
 
 
@@ -53,12 +36,12 @@ public class MemberController {
     public ApiResponse<String> testHeader(
             @RequestHeader(name = "test") String test
     ) {
-        return ApiResponse.onSuccess(memberService.singleParameter(test));
+        return ApiResponse.isSuccess(memberService.singleParameter(test));
     }
 
 
-    @GetMapping("/test")
+    @GetMapping("/test") //서버 살아있는지 확인
     public ApiResponse<String> test() {
-        return ApiResponse.onSuccess("test success");
+        return ApiResponse.isSuccess("test success");
     }
 }

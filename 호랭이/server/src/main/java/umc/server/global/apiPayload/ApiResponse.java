@@ -23,8 +23,23 @@ public class ApiResponse<T> {
     @JsonProperty("result")
     private T result;
 
+    // 성공
+    public static <T> ApiResponse<T> isSuccess(T result) {
+        return new ApiResponse<>(
+                true,
+                "200",
+                "success",
+                result
+        );
+    }
     //실패
-    private static <T> ApiResponse<T> onFailure(BaseErrorCode, T result){
-        result new ApiResponse<>(false, code.getCode(), code.getMessage(),result);
+    private static <T> ApiResponse<T> onFailure(BaseErrorCode code, T result) {
+        ApiResponse<T> tApiResponse = new ApiResponse<>(
+                false,
+                code.getCode(),
+                code.getMessage(),
+                result
+        );
+        return tApiResponse;
     }
 }

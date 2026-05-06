@@ -1,8 +1,12 @@
 package umc.server.global.apiPayload.handler;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import umc.server.global.apiPayload.ApiResponse;
+import umc.server.global.apiPayload.code.BaseErrorCode;
+import umc.server.global.apiPayload.code.GeneralErrorCode;
 import umc.server.global.apiPayload.exception.ProjectException;
 
 @RestControllerAdvice

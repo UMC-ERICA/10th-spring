@@ -10,7 +10,7 @@ import umc.server.global.apiPayload.ApiResponse;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/stores")
-public class StoreController {
+public class StoreConverter {
 
     private final StoreService storeService;
 

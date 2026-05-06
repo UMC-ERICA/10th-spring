@@ -13,27 +13,6 @@ import umc.server.domain.member.repository.MemberRepository;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-
-    private final MemberRepository memberRepository;
-    public MemberResDTO.GetInfo getInfo(
-            MemberReqDTO.GetInfo dto){
-
-        Long memberId = dto.id();
-
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
-        return MemberConverter.toGetInfo(member);
-    }
-
-    public String singleParameter(
-            String singleParameter
-    ){
-        return singleParameter;
-    }
-
-    public MemberResDTO.RequestBody requestBody(
-            MemberReqDTO.RequestBody dto
-    ){
-        return MemberConverter.toRequestBody(dto.stringTest(), dto.longTest());
+    public Object singleParameter(String queryParameter) {
     }
 }

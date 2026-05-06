@@ -9,23 +9,17 @@ import umc.server.global.apiPayload.ApiResponse;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/reviews")
+@RequestMapping("/reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/store/{storeId}")
-    public ApiResponse<ReviewResDTO.ReviewList> getStoreReviews(
-            @PathVariable Long storeId
+    @PostMapping("/stores/{storeId}")
+    public ApiResponse<Void> createdReview(
+            @PathVariable Long storeId,
+            @RequestBody ReviewReqDTO.CreateReview request
     ) {
-        return ApiResponse.onSuccess(reviewService.getStoreReviews(storeId));
-    }
-
-    @PostMapping("/{reviewId}/replies")
-    public ApiResponse<String> createReply(
-            @PathVariable Long reviewId,
-            @RequestBody ReviewReqDTO.CreateReply dto
-    ) {
-        return ApiResponse.onSuccess(reviewService.postReply(reviewId, dto));
+        reviewService.createReview(storeId, request);
+        return ApiResponse.isSuccess(null);
     }
 }
