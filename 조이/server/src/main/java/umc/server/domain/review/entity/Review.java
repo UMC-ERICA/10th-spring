@@ -15,12 +15,14 @@ import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.store.entity.Store;
 import umc.server.global.entity.BaseEntity;
 
+@Getter
 @Entity
 @Builder
 @NoArgsConstructor
@@ -34,8 +36,11 @@ public class Review extends BaseEntity {
     @Column(name = "review_content", nullable = false)
     private String reviewContent;
 
-    @Column(name = "review_star", nullable = false)
-    private Double reviewStar;
+    @Column(name = "star", nullable = false)
+    private Double Star;
+
+    @Column(name = "img_url", nullable = false)
+    private String imageUrl;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<Reply> replies;

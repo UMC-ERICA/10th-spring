@@ -23,7 +23,7 @@ public class MemberService {
     private final MissionRepository missionRepository;
 
     public MemberResDTO.JoinResDTO join(MemberReqDTO.JoinReqDTO dto) {
-//      1. 회원 가입 로직 구현
+        // 1. 회원 가입 로직 구현
         Member member = MemberConverter.toMemberEntity(dto);
         // 2. 회원 정보 저장 (음식 관계 설정 추후 구현 하겠습니다)
 
