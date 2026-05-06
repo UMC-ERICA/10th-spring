@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import umc.server.domain.member.entity.enums.MemberMissionStatus;
 import umc.server.domain.mission.entity.enums.MissionStatus;
+import java.util.List;
 import umc.server.domain.mission.dto.GetMissionsCountResponse;
 import umc.server.domain.mission.dto.GetMissionsResponse;
 import umc.server.domain.mission.service.MissionQueryService;
@@ -33,7 +34,7 @@ public class MissionController {
 
     // 미션 목록 조회 (진행중/종료)
     @GetMapping("/missions")
-    public ApiResponse<GetMissionsResponse> getMissions(
+    public ApiResponse<List<GetMissionsResponse>> getMissions(
             @RequestParam MissionStatus missionStatus
     ) {
         return ApiResponse.success(CommonSuccessCode.OK, missionQueryService.getMissions(missionStatus));

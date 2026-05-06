@@ -10,4 +10,6 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     List<Mission> findAllByMember(Member member);
 
     List<Mission> findAllByMemberAndStatus(Member member, MissionStatus status);
+
+    List<Mission> findAllByStatus(MissionStatus status);
 }

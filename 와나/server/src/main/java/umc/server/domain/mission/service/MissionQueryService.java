@@ -1,8 +1,11 @@
 package umc.server.domain.mission.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.entity.MemberMission;
 import umc.server.domain.member.entity.enums.MemberMissionStatus;
@@ -17,17 +20,22 @@ import umc.server.domain.mission.entity.enums.MissionStatus;
 import umc.server.domain.mission.exception.MissionErrorCode;
 import umc.server.domain.mission.exception.MissionException;
 import umc.server.domain.mission.repository.MissionRepository;
+import umc.server.domain.restaurant.entity.Restaurant;
+import umc.server.domain.restaurant.entity.enums.FoodCategory;
+import umc.server.domain.restaurant.repository.RestaurantCategoryRepository;
 import umc.server.global.paging.CursorPageResponse;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MissionQueryService {
 
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
     private final MemberMissionRepository memberMissionRepository;
+    private final RestaurantCategoryRepository restaurantCategoryRepository;
 
-    private final int SIZE = 10;
+    private static final int SIZE = 10;
 
     public CursorPageResponse<GetMissionsResponse> getMyMissions(
             Long memberId,
@@ -36,26 +44,47 @@ public class MissionQueryService {
     ) {
         Member member = findMemberById(memberId);
 
-        // cursor가 null이면 처음부터, 아니면 해당 id 이후부터
-        // TODO : cursor 기반 페이지네이션 구현
-        return null;
+        List<MemberMission> fetched = memberMissionRepository.findByMemberAndStatusWithCursor(
+                member, status, cursor, PageRequest.of(0, SIZE + 1)
+        );
+
+        boolean hasNext = fetched.size() > SIZE;
+        List<MemberMission> page = hasNext ? fetched.subList(0, SIZE) : fetched;
+
+        List<GetMissionsResponse> contents = page.stream()
+                .map(mm -> toResponse(mm.getMission()))
+                .collect(Collectors.toList());
+
+        Long nextCursor = hasNext ? page.get(page.size() - 1).getId() : null;
+        return new CursorPageResponse<>(contents, nextCursor, hasNext);
+    }
+
+    public List<GetMissionsResponse> getMissions(MissionStatus missionStatus) {
+        return missionRepository.findAllByStatus(missionStatus).stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     public GetMissionsCountResponse getMyMissionCount(Long memberId, MemberMissionStatus status) {
-        // TODO : 추후 구현
-        return null;
+        Member member = findMemberById(memberId);
+        int totalCount = memberMissionRepository.countByMember(member);
+        int completedCount = memberMissionRepository.countByMemberAndStatus(member, MemberMissionStatus.COMPLETED);
+        return new GetMissionsCountResponse(totalCount, completedCount);
     }
 
-    public GetMissionsResponse getMissions(MissionStatus missionStatus) {
-        // TODO : 추후 구현
-        return null;
+
+
+    private GetMissionsResponse toResponse(Mission mission) {
+        FoodCategory category = restaurantCategoryRepository.findFirstByRestaurant(mission.getRestaurant())
+                .map(rc -> rc.getCategory())
+                .orElse(FoodCategory.OTHER);
+        return GetMissionsResponse.from(mission, category);
     }
 
     private Mission findMissionById(Long missionId) {
         return missionRepository.findById(missionId)
                 .orElseThrow(() -> new MissionException(MissionErrorCode.MISSION_NOT_FOUND));
     }
-
 
     private Member findMemberById(Long memberId) {
         return memberRepository.findById(memberId)

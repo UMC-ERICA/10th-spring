@@ -10,6 +10,7 @@ import umc.server.global.exception.code.BaseCode;
 public enum MissionErrorCode implements BaseCode {
 
     MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION_4001", "미션을 찾을 수 없습니다."),
+    MEMBER_MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION_4002", "회원 미션을 찾을 수 없습니다."),
 
     ;
     private final HttpStatus httpStatus;

@@ -44,4 +44,8 @@ public class MemberMission extends BaseEntity {
         return new MemberMission(member, mission);
     }
 
+    public void updateStatus(MemberMissionStatus status) {
+        this.status = status;
+    }
+
 }
