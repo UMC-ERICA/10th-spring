@@ -21,5 +21,6 @@ public class FavFood {
     private Member member;
 
     @Column(name = "food")
+    @Enumerated(EnumType.STRING)
     private Food food;
 }

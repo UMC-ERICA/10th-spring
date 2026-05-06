@@ -55,7 +55,7 @@ public class Member extends BaseEntity {
     @Builder.Default
     private Integer point = 0;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
     @JoinColumn(name="address_id")
     private Address address;
 

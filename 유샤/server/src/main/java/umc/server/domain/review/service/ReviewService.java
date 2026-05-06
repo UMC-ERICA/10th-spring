@@ -2,6 +2,7 @@ package umc.server.domain.review.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.review.converter.ReviewConverter;
@@ -20,6 +21,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public ReviewResDTO.PostReview createReview(
             Long storeId,
             ReviewReqDTO.PostReview dto

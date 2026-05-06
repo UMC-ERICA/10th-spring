@@ -1,7 +1,7 @@
 package umc.server.domain.store.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 import umc.server.domain.common.entity.Address;
 import umc.server.domain.common.entity.BaseEntity;
 import umc.server.domain.store.enums.Category;
@@ -9,6 +9,10 @@ import umc.server.domain.store.enums.Category;
 import java.time.LocalTime;
 
 @Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="store")
 public class Store extends BaseEntity {
 
     @Id
@@ -19,7 +23,7 @@ public class Store extends BaseEntity {
     private String name;
 
     @Column(name="manager_number",nullable=false)
-    private Long manager_number;
+    private Long managerNumber;
 
     @Column(name="category", nullable=false)
     @Enumerated(EnumType.STRING)

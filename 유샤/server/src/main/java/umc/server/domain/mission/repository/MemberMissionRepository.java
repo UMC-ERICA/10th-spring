@@ -3,14 +3,14 @@ package umc.server.domain.mission.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import umc.server.domain.common.entity.Address;
 import umc.server.domain.mission.entity.Mission;
+import umc.server.domain.mission.entity.mapping.MemberMission;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MemberMissionRepository extends JpaRepository<Mission, Long> {
+public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
     @Query("SELECT m FROM MemberMission mm " +
             "JOIN mm.mission m " +
