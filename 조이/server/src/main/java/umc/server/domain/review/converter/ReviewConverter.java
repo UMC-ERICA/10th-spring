@@ -17,6 +17,7 @@ public class ReviewConverter {
                 .imageUrl(review.getImageUrl())
                 .build();
     }
+
     public static ReviewResDTO.ReviewPreViewListDTO toReviewPreViewListDTO(List<Review> reviews) {
 
         List<ReviewResDTO.ReviewGetDTO> reviewGetDTOList = reviews.stream()
@@ -26,4 +27,5 @@ public class ReviewConverter {
         return ReviewResDTO.ReviewPreViewListDTO.builder()
                 .reviews(reviewGetDTOList)
                 .build();
+    }
 }
