@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ReviewPhoto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column (name = "photo_url")

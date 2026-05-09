@@ -9,7 +9,6 @@ import umc.server.domain.member.entity.mapping.MemberFood;
 import umc.server.domain.member.entity.mapping.MemberTerm;
 import umc.server.domain.member.enums.Gender;
 import umc.server.domain.member.enums.SocialType;
-import umc.server.domain.mission.enums.Address;
 import umc.server.global.apiPayload.code.BaseEntity;
 
 import java.time.LocalDate;
@@ -26,7 +25,7 @@ import java.util.List;
 public class Member extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(mappedBy = "member")
@@ -41,17 +40,15 @@ public class Member extends BaseEntity {
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Gender gender = Gender.NONE;
+    private Gender gender;
 
     @Column(name = "birth", nullable = false)
     private LocalDate birth;
 
     @Column(name = "address", nullable = false)
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private Address address = Address.NONE;
+    private String address;
 
-    @Column(name = "detil_address", nullable = false)
+    @Column(name = "detail_address", nullable = false)
     private String detailAddress;
 
     @Column(name = "social_uid", nullable = false)

@@ -1,11 +1,12 @@
 package umc.server.domain.store.entitty;
 
 import jakarta.persistence.*;
-import jdk.jfr.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.server.domain.store.enums.Category;
 
 @Entity
 @Getter
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Store {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)

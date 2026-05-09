@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class  Mission {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "deadline", nullable = false)

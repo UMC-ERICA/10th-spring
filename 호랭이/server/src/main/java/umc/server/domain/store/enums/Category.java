@@ -1,6 +1,6 @@
-package umc.server.domain.member.enums;
+package umc.server.domain.store.enums;
 
-public enum FoodName {
+public enum Category {
     KOREAN,
     CHINESE,
     JAPANESE,

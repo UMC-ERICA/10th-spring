@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Review {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY) //리뷰 하나당 답글 여러개 가능
