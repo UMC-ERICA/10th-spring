@@ -7,5 +7,6 @@ import umc.server.domain.mission.entity.Mission;
 
 @Repository
 public interface MemberMission extends JpaRepository<MemberMission, Long> {
-    List<Mission> findByMemberId(Long memberId);
+    List<MemberMission> findByMemberId(Long memberId);
+
 }
