@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import umc.server.domain.member.entity.mapping.MemberFood;
 
 @Repository
-public interface MemberFoodRepository extends JpaRepository<MemberFooㅈㅈㅈd, Long> {
+public interface MemberFoodRepository extends JpaRepository<MemberFood, Long> {
 }
