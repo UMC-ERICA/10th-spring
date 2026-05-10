@@ -2,6 +2,7 @@ package umc.server.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.dto.request.SignupRequest;
 import umc.server.domain.member.dto.response.GetProfileResponse;
 import umc.server.domain.member.entity.Member;
@@ -11,6 +12,7 @@ import umc.server.domain.member.repository.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;

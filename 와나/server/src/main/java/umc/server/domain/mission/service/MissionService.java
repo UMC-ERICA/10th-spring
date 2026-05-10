@@ -17,13 +17,13 @@ import umc.server.domain.mission.repository.MissionRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MissionService {
 
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
     private final MemberMissionRepository memberMissionRepository;
 
-    @Transactional
     public void completeMission(Long memberId, Long missionId) {
         Member member = findMemberById(memberId);
         Mission mission = findMissionById(missionId);
