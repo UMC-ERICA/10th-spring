@@ -1,4 +1,20 @@
 package umc.server.domain.mission.exception.code;
 
-public enum MissionSuccessCode {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.aspectj.apache.bcel.classfile.Code;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
+import umc.server.global.apiPayload.code.BaseSuccessCode;
+
+@Getter
+@RequiredArgsConstructor
+public enum MissionSuccessCode implements BaseSuccessCode {
+    CREATED(HttpStatus.CREATED, "MISSION201_1", "미션이 성공적으로 생성되었습니다."),
+    OK(HttpStatus.OK, "MISSION200_1", "미션이 성공적으로 조회되었습니다."),
+    ;
+
+    private final HttpStatus status;
+    private final String message;
+    private final String code;
 }

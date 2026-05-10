@@ -12,27 +12,25 @@ import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.mission.converter.MissionConverter;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.Mission;
-import umc.server.domain.mission.exception.MissionnException;
-import umc.server.domain.mission.exception.code.MissionErrorCode;
-import umc.server.domain.mission.repository.MemberMission;
+import umc.server.domain.mission.entity.mapping.MemberMission;
+import umc.server.domain.mission.repository.MemberMissionRepository;
 import umc.server.domain.mission.repository.MissionRepository;
-import umc.server.domain.review.converter.ReviewConverter;
-import umc.server.domain.review.entity.Review;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MissionService {
     private final MissionRepository missionRepository;
-    private final MemberMission memberMissionRepository;
+    private final MemberMissionRepository memberMissionRepository;
     private final MemberRepository memberRepository;
 
     //미션조회
-    public List<MissionResDTO.MissionsResDTO> getMissions() {
+    public List<MissionResDTO.MissionsResDTO> getMissions(Long memberId) {
 
-        List<Mission> missions = missionRepository.findAll();
+        List<MemberMission> memberMissions = memberMissionRepository.findByMemberId(memberId);
 
-        return missions.stream()
+        return memberMissions.stream()
+                .map(MemberMission::getMission) // MemberMission에서 Mission 엔티티 추출
                 .map(MissionConverter::toMissionsResDTO)
                 .collect(Collectors.toList());
     }
@@ -43,12 +41,21 @@ public class MissionService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-        List<Mission> missions = memberMissionRepository.findByMemberId(memberId);
+        List<MemberMission> missions = memberMissionRepository.findByMemberId(memberId);
+
+        return missions.stream()
+                .map(MemberMission::getMission) // MemberMission에서 Mission 엔티티 추출
+                .map(MissionConverter::toMissionsResDTO)
+                .toList();
+    }
+
+    // 가게 미션 확인
+    public List<MissionResDTO.MissionsResDTO> storeMissions(Long storeId) {
+        List<Mission> missions = missionRepository.findByStoreId(storeId);
 
         return missions.stream()
                 .map(MissionConverter::toMissionsResDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
-
 
 }

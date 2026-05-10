@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import java.util.prefs.BackingStoreException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.server.domain.member.entity.Food;
 import umc.server.domain.member.entity.Member;
@@ -22,6 +23,7 @@ import umc.server.global.entity.BaseEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Table(name = "member_mission")
 public class MemberMission extends BaseEntity {
 
