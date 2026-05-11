@@ -10,7 +10,6 @@ import umc.server.domain.review.converter.ReviewConverter;
 import umc.server.domain.review.dto.ReviewResDTO;
 import umc.server.domain.store.entity.Store;
 
-@Builder
 public class MissionConverter {
     //미션가져오기
     public static MissionResDTO.MissionsResDTO toMissionsResDTO(Mission mission) {
@@ -41,6 +40,19 @@ public class MissionConverter {
                 .point(dto.point())
                 .missionInfo(dto.deadline().toString())
                 .deadline(dto.deadline())
+                .build();
+    }
+
+    //페이지네이션 툴 생성
+    public static <T> MissionResDTO.Pagination<T> toPagination(
+            List<T> data,
+            Integer PageNumber,
+            Integer PageSize
+    ) {
+        return MissionResDTO.Pagination.<T>builder()
+                .data(data)
+                .pageNumber(PageNumber)
+                .pageSize(PageSize)
                 .build();
     }
 }

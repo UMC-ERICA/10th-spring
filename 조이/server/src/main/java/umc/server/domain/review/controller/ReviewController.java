@@ -35,7 +35,7 @@ public class ReviewController {
 
     //가게별 리뷰조회
     @GetMapping("/stores/{storeId}")
-    public ApiResponse<ReviewResDTO.ReviewStoreGetDTO> getReviewListByStore(
+    public ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getReviewListByStore(
             @PathVariable(name = "storeId") Long storeId) {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, null); // 가게 컨트롤러에 넣는 게 좋을까요?!?!?
     }

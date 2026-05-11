@@ -42,14 +42,14 @@ public class MissionController {
 
     //가게 내 미션 조회
     @GetMapping("/stores/{storeId}/missions")
-    public ApiResponse<MissionResDTO.MissionsGetResDTO> getStoreMissionList(
+    public ApiResponse<MissionResDTO.Pagination<MissionResDTO.MissionsResDTO>> getStoreMissionList(
             @PathVariable Long storeId,
             @RequestParam Integer pageSize,
             @RequestParam Integer pageNumber,
             @RequestParam(required = false) String sort
     ) {
         BaseSuccessCode code = MissionSuccessCode.OK;
-        return ApiResponse.onSuccess(code, missionService.storeMissions(storeId, pageSize, pageNumber, sort));
+        return ApiResponse.onSuccess(code, missionService.getMissions(storeId, pageSize, pageNumber, sort));
     }
 
     //가게 미션 생성

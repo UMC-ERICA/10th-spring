@@ -52,35 +52,30 @@ public class MissionService {
                 .toList();
     }
 
-    // 가게 미션 확인
-    public List<MissionResDTO.MissionsResDTO> storeMissions(Long storeId) {
-        List<Mission> missions = missionRepository.findByStoreId(storeId);
+    // 가게 미션 조회 (페이지네이션)
+    public MissionResDTO.Pagination<MissionResDTO.MissionsResDTO> getMissions(
+            Long storeId,
+            Integer pageSize,
+            Integer pageNumber,
+            String sort
+    ) {
+        Sort sortInfo;
+        if (sort != null) {
+            sortInfo = Sort.by(sort);
+        } else {
+            sortInfo = Sort.by("id").descending();
+        }
 
-        return missions.stream()
-                .map(MissionConverter::toMissionsResDTO)
-                .toList();
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sortInfo);
+
+        Page<Mission> missionsList = missionRepository.findByStoreId(storeId, pageRequest);
+
+        return MissionConverter.toPagination(
+                missionsList.map(MissionConverter::toMissionsResDTO).toList(),
+                missionsList.getNumber(),
+                missionsList.getSize()
+        );
     }
-
-//    public Page<MissionResDTO.> getMissions(
-//            Long storeId,
-//            Integer pageSize,
-//            Integer pageNumber,
-//            String sort
-//    ){
-//        //정령 정보 생성
-//        Sort sortInfo;
-//        if (sort!= null){
-//            sortInfo=Sort.by(sort);
-//        }else{
-//            sortInfo=Sort.by("id").descending();
-//        }
-//
-//        //페이지 정보들을 PageRequest로 만들기
-//        PageRequest pageRequest= PageRequest.of(pageNumber,pageSize,sortInfo);
-//
-//        //가게 내 미션들을 조회
-//        Page<Mission> missionsList =missionRepository.findByStoreId(storeId,pageRequest);
-
 
 }
 

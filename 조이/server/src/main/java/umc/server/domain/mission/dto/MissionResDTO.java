@@ -20,4 +20,13 @@ public class MissionResDTO {
     ) {
     }
 
+    // 페이지네이션 DTO
+    @Builder
+    public record Pagination<T>(
+            List<T> data,
+            Integer pageNumber,
+            Integer pageSize
+    ) {
+    }
+
 }
