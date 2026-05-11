@@ -40,14 +40,26 @@ public class MissionController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
     }
 
-    //가게 미션 생성
-    @PatchMapping("/stores/{storeId}/missions")
-    public ApiResponse<void> createMission(
+    //가게 내 미션 조회
+    @GetMapping("/stores/{storeId}/missions")
+    public ApiResponse<MissionResDTO.MissionsGetResDTO> getStoreMissionList(
             @PathVariable Long storeId,
-            @RequestParam MissionReqDTO.CreateMission dto
+            @RequestParam Integer pageSize,
+            @RequestParam Integer pageNumber,
+            @RequestParam(required = false) String sort
     ) {
-        BaseSuccessCode code = MissionSuccessCode.CREATED;
-        return ApiResponse.onSuccess(code, missionService.createMissioon(storeId, dto));
+        BaseSuccessCode code = MissionSuccessCode.OK;
+        return ApiResponse.onSuccess(code, missionService.storeMissions(storeId, pageSize, pageNumber, sort));
     }
+
+    //가게 미션 생성
+//    @PatchMapping("/stores/{storeId}/missions")
+//    public ApiResponse<void> createMission(
+//            @PathVariable Long storeId,
+//            @RequestParam MissionReqDTO.CreateMission dto
+//    ) {
+//        BaseSuccessCode code = MissionSuccessCode.CREATED;
+//        return ApiResponse.onSuccess(code, missionService.createMission(storeId, dto));
+//    }
 
 }

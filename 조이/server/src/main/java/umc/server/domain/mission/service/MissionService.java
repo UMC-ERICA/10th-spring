@@ -3,6 +3,9 @@ package umc.server.domain.mission.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
@@ -58,4 +61,27 @@ public class MissionService {
                 .toList();
     }
 
+//    public Page<MissionResDTO.> getMissions(
+//            Long storeId,
+//            Integer pageSize,
+//            Integer pageNumber,
+//            String sort
+//    ){
+//        //정령 정보 생성
+//        Sort sortInfo;
+//        if (sort!= null){
+//            sortInfo=Sort.by(sort);
+//        }else{
+//            sortInfo=Sort.by("id").descending();
+//        }
+//
+//        //페이지 정보들을 PageRequest로 만들기
+//        PageRequest pageRequest= PageRequest.of(pageNumber,pageSize,sortInfo);
+//
+//        //가게 내 미션들을 조회
+//        Page<Mission> missionsList =missionRepository.findByStoreId(storeId,pageRequest);
+
+
 }
+
+

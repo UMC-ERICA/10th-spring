@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.security.Timestamp;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +27,7 @@ import umc.server.global.entity.BaseEntity;
 
 @Entity
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "member")
 @Getter
@@ -34,7 +35,7 @@ import umc.server.global.entity.BaseEntity;
 public class Member extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)

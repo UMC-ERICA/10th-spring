@@ -12,9 +12,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import umc.server.domain.member.entity.mapping.MemberFood;
 import umc.server.domain.member.enums.FoodType;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.review.entity.Review;
@@ -22,11 +24,10 @@ import umc.server.global.entity.BaseEntity;
 
 @Entity
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "food")
 public class Food extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,6 +37,6 @@ public class Food extends BaseEntity {
     private FoodType foodType;
 
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
-    private List<MemberMission> memberMissions;
+    private List<MemberFood> memberFoods;
 
 }

@@ -12,8 +12,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.entity.mapping.MemberMission;
@@ -22,8 +24,9 @@ import umc.server.global.entity.BaseEntity;
 
 @Entity
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Getter
 @Table(name = "store")
 public class Store extends BaseEntity {
     @Id
