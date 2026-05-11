@@ -54,7 +54,7 @@ public class Mission extends BaseEntity {
     private Store store;
 
     // 연관관계 편의 메서드
-    public void setStore(Store store) {
+    public void assignToStore(Store store) {
         // 기존에 연결된 가게가 있다면 제거
         if (this.store != null) {
             this.store.getMissionList().remove(this);

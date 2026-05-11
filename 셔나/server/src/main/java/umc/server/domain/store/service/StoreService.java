@@ -27,7 +27,7 @@ public class StoreService {
                 .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
 
         Mission newMission = StoreConverter.toMission(request);
-        newMission.setStore(store);
+        newMission.assignToStore(store);
 
         Mission savedMission = missionRepository.save(newMission);
 
