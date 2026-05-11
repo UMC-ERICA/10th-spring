@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("SELECT r FROM Review r JOIN FETCH r.member LEFT JOIN FETCH r.replyList WHERE r.store.id = :storeId")
+    @Query("SELECT r FROM Review r JOIN FETCH r.member LEFT JOIN FETCH r.replyList LEFT JOIN FETCH r.reviewPhotoList WHERE r.store.id = :storeId")
     List<Review> findAllByStoreIdWithReply(Long storeId);
 }
