@@ -52,4 +52,18 @@ public class Mission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
+
+    // 연관관계 편의 메서드
+    public void assignToStore(Store store) {
+        // 기존에 연결된 가게가 있다면 제거
+        if (this.store != null) {
+            this.store.getMissionList().remove(this);
+        }
+        this.store = store;
+
+        // 가게 쪽에서도 이 미션을 목록에 추가 (양방향 동기화)
+        if (store != null) {
+            store.getMissionList().add(this);
+        }
+    }
 }

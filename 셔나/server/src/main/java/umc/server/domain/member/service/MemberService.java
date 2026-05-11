@@ -14,7 +14,6 @@ import umc.server.domain.member.exception.code.FoodErrorCode;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.FoodRepository;
 import umc.server.domain.member.repository.MemberRepository;
-import umc.server.global.apiPayload.exception.GeneralException;
 
 import java.util.List;
 

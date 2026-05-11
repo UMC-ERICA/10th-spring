@@ -2,6 +2,7 @@ package umc.server.domain.mission.converter;
 
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.MemberMission;
+import umc.server.domain.mission.entity.Mission;
 
 import java.util.List;
 
@@ -35,6 +36,29 @@ public class MissionConverter {
         return MissionResDTO.UpdateMissionStatusResultDTO.builder()
                 .missionId(memberMission.getMission().getId())
                 .missionStatus(memberMission.getMissionStatus())
+                .build();
+    }
+
+    // entity -> 홈 미션 조회 DTO
+    public static MissionResDTO.HomeMissionDTO toHomeMissionDTO(Mission mission) {
+        return MissionResDTO.HomeMissionDTO.builder()
+                .missionId(mission.getId())
+                .storeName(mission.getStore().getStoreName())
+                .category(mission.getStore().getCategory())
+                .missionTitle(mission.getMissionTitle())
+                .rewardPoints(mission.getRewardPoints())
+                .deadline(mission.getDeadline())
+                .build();
+    }
+
+    // entity -> 홈 미션 목록 조회 DTO
+    public static MissionResDTO.GetHomeMissionListDTO toGetHomeMissionListDTO(List<Mission> missionList) {
+        List<MissionResDTO.HomeMissionDTO> homeMissionDTOList = missionList.stream()
+                .map(MissionConverter::toHomeMissionDTO)
+                .toList();
+
+        return MissionResDTO.GetHomeMissionListDTO.builder()
+                .homeMissionList(homeMissionDTOList)
                 .build();
     }
 }

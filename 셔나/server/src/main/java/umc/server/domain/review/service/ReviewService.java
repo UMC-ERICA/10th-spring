@@ -15,7 +15,8 @@ import umc.server.domain.store.entity.Store;
 import umc.server.domain.store.exception.StoreException;
 import umc.server.domain.store.exception.code.StoreErrorCode;
 import umc.server.domain.store.repository.StoreRepository;
-import umc.server.global.apiPayload.exception.GeneralException;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -47,5 +48,14 @@ public class ReviewService {
 
         // 결과 반환 (Entity -> DTO 변환)
         return ReviewConverter.toCreateReviewResultDTO(savedReview);
+    }
+
+    public ReviewResDTO.GetReviewListDTO getReviewList(Long storeId) {
+        storeRepository.findById(storeId)
+                .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
+
+        List<Review> reviews = reviewRepository.findAllByStoreIdWithReply(storeId);
+
+        return ReviewConverter.toGetReviewResultDTO(reviews);
     }
 }
