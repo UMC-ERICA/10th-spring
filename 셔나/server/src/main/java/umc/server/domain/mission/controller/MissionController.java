@@ -31,9 +31,9 @@ public class MissionController {
         return ApiResponse.onSuccess(MissionSuccessCode.MISSION_STATUS_UPDATED, missionService.updateMissionCompleted(memberId, missionId));
     }
 
-    @GetMapping("/home/{storeRegion}")
+    @GetMapping("/home")
     public ApiResponse<MissionResDTO.GetHomeMissionListDTO> findHomeMissionList(
-            @PathVariable String storeRegion
+            @RequestParam(name = "region") String storeRegion
     ) {
         return ApiResponse.onSuccess(MissionSuccessCode.MISSION_FOUND, missionService.getHomeMissionList(storeRegion));
     }
