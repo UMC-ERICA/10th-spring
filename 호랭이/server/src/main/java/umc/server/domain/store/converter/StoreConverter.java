@@ -1,30 +1,27 @@
-package umc.server.domain.store.controller;
+package umc.server.domain.store.converter;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import umc.server.domain.store.dto.StoreReqDTO;
 import umc.server.domain.store.dto.StoreResDTO;
-import umc.server.domain.store.service.StoreService;
-import umc.server.global.apiPayload.ApiResponse;
+import umc.server.domain.store.entity.Store;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/stores")
 public class StoreConverter {
 
-    private final StoreService storeService;
 
-    @PostMapping("/")
-    public ApiResponse<StoreResDTO.StoreInfo> createStore(
-            @RequestBody StoreReqDTO.JoinStore dto
-    ) {
-        return ApiResponse.onSuccess(storeService.createStore(dto));
+    public static Store toStore(StoreReqDTO.JoinStore dto) {
+        return Store.builder()
+                .name(dto.name())
+                .category(dto.category())
+                .address(dto.address())
+                .build();
     }
 
-    @GetMapping("/{storeId}")
-    public ApiResponse<StoreResDTO.StoreInfo> getStore(
-            @PathVariable Long storeId
-    ) {
-        return ApiResponse.onSuccess(storeService.getStore(storeId));
+
+    public static StoreResDTO.StoreInfo toStoreInfo(Store store) {
+        return StoreResDTO.StoreInfo.builder()
+                .storeId(store.getId())
+                .name(store.getName())
+                .category(store.getCategory())
+                .rating(store.getRating())
+                .build();
     }
 }

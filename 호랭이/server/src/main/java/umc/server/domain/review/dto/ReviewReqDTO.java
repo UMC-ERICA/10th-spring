@@ -4,8 +4,9 @@ public class ReviewReqDTO {
 
     public record CreateReview(
             String content,
-            Float score,
-            String photoUrl
+            Float score
+           // String photoUrl
+
     ) {}
 
     public record CreateReply(

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,9 +21,8 @@ public class Review {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY) //리뷰 하나당 답글 여러개 가능
-    @JoinColumn(name = "reply_id")
-    private Reply reply;
+    @OneToMany(mappedBy = "review") //리뷰 하나당 답글 여러개 가능
+   private List<Reply> replies;
 
     @Column(name = "content", nullable = false)
     private String content;

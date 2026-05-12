@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.server.domain.store.entitty.Store;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,11 +26,14 @@ public class  Mission {
     private LocalDate deadline;
 
     @Column(name = "conditional", nullable = false)
-    private String conditional;
+    private String conditional; //미션 조건
 
     @Column(name = "point", nullable = false)
-    private int point;
+    private Integer point;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 

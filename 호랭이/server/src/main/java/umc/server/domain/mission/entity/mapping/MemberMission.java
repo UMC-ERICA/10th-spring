@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.mission.entity.Mission;
+import umc.server.domain.mission.enums.MissionStatus;
 
 @Entity
 @Getter
@@ -27,4 +27,8 @@ public class MemberMission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private MissionStatus status;
 }

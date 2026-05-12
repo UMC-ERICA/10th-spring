@@ -11,7 +11,7 @@ import umc.server.global.apiPayload.code.BaseErrorCode;
 @RequiredArgsConstructor
 public enum StoreErrorCode implements BaseErrorCode {
 
-    STORE_NOTE_FOUND(HttpStatus.NOT_FOUND,
+    NOT_FOUND(HttpStatus.NOT_FOUND,
             "STORE404_1",
             "해당 가게를 찾을 수 없습니다."),
     ;

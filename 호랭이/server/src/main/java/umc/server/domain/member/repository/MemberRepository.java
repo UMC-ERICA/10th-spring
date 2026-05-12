@@ -6,5 +6,5 @@ import umc.server.domain.member.entity.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long>{
-    void deleteByName(String name);
+
 }
