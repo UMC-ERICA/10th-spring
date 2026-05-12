@@ -46,14 +46,23 @@ public class MemberReqDTO {
     ) {}
 
     public record TermsDTO(
+            @NotNull(message = "만 14세 이상 동의 여부를 확인해주세요.")
             @Schema(description = "만 14세 이상 동의 여부")
             boolean ageOver14,
+
+            @NotNull(message = "서비스 이용약관 동의 여부를 확인해주세요.")
             @Schema(description = "서비스 이용약관 동의 여부")
             boolean serviceTerms,
+
+            @NotNull(message = "개인정보 처리방침 동의 여부를 확인해주세요.")
             @Schema(description = "개인정보 처리방침 동의 여부")
             boolean privacyTerms,
+
+            @NotNull(message = "위치정보 제공 동의 여부를 선택해주세요.")
             @Schema(description = "위치정보 제공 동의 여부")
             boolean locationTerms,
+
+            @NotNull(message = "마케팅 수신 동의 여부를 선택해주세요.")
             @Schema(description = "마케팅 수신 동의 여부")
             boolean marketingTerms
     ) {}
