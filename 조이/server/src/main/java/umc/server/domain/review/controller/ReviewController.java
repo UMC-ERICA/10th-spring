@@ -1,5 +1,6 @@
 package umc.server.domain.review.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ public class ReviewController {
     //리뷰 작성
     @PostMapping
     public ApiResponse<ReviewResDTO.CreateResDTO> createReview(
-            @RequestBody ReviewReqDTO.CreateReviewReqDTO dto) {
+            @RequestBody @Valid ReviewReqDTO.CreateReviewReqDTO dto) {
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, null);
     }
 
@@ -33,7 +34,7 @@ public class ReviewController {
     @PostMapping("/{reviewId}/comments")
     public ApiResponse<ReviewResDTO.CommentResDTO> createComment(
             @PathVariable Long reviewId,
-            @RequestBody ReviewReqDTO.ReviewCommentReqDTO dto) {
+            @RequestBody @Valid ReviewReqDTO.ReviewCommentReqDTO dto) {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
     }
 

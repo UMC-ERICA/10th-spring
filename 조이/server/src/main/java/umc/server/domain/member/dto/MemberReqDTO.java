@@ -14,12 +14,13 @@ import umc.server.domain.member.enums.Gender;
 public class MemberReqDTO {
     public record JoinReqDTO(
 
-            @NotBlank
+            @NotBlank(message = "이름은 빈칸일 수 없습니다.")
             String name,
             Gender gender,
 
             @Email
             String email,
+            @NotBlank(message = "전화번호는 빈칸일 수 없습니다.")
             String tel,
             String address
     ) {
