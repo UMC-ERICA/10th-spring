@@ -1,5 +1,4 @@
 package umc.server.domain.member.enums;
 
-public enum Gender {
-    NONE
+public enum FoodName {
 }
