@@ -2,8 +2,15 @@ package umc.server.domain.review.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.exception.MemberException;
+import umc.server.domain.member.exception.code.MemberErrorCode;
+import umc.server.domain.member.repository.MemberRepository;
+import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.review.converter.ReviewConverter;
 import umc.server.domain.review.dto.ReviewResDTO;
 import umc.server.domain.review.entity.Review;
@@ -20,18 +27,45 @@ import umc.server.domain.store.repository.StoreRepository;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final StoreRepository storeRepository;
+    private final MemberRepository memberRepository;
 
-    public ReviewResDTO.ReviewPreViewListDTO getReviewList(Long storeId) {
+    //리뷰조회 페이지네이션 ver
+    public ReviewResDTO.Pagination<ReviewResDTO.ReviewGetDTO> getReviewList(Long memberId, Integer pageSize,
+                                                                            String cursor,
+                                                                            String query) {
 
-        // 있는 가게인지 확인
-        Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
+        memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-        List<Review> reviews = reviewRepository.findByStoreId(storeId);
+        PageRequest pageRequest = PageRequest.of(0, pageSize);
 
-        return ReviewConverter.toReviewPreViewListDTO(reviews);
+        Slice<Review> reviewList;
 
+        if (!cursor.equals("-1")) {
+            String[] cursorSplit = cursor.split(":");
+            switch (query.toLowerCase()) {
+                case "id":
+                    long idCursor = Long.parseLong(cursorSplit[1]);
+                    reviewList = reviewRepository.findReviewByMemberId_AndIdLessThan(memberId, idCursor, pageRequest);
+                    break;
+                case "star":
+                    reviewList = reviewRepository.findByMemberIdOrderByStarDesc(memberId, pageRequest);
+                    break;
+                default:
+                    throw new ReviewException(ReviewErrorCode.QUERY_NOT_FOUND.getMessage());
+            }
+        } else {
+            reviewList = reviewRepository.findReviewByMemberId_IdOrderByIdDesc(memberId, pageRequest);
+        }
+
+        String nextCursor = reviewList.getContent().getLast().getId() + ":" + reviewList.getContent().getLast().getId();
+
+        return ReviewConverter.toPagination(
+                reviewList.map(ReviewConverter::toReviewGetDTO).toList(),
+                reviewList.hasNext(),
+                nextCursor,
+                reviewList.getSize()
+        );
     }
 
 }

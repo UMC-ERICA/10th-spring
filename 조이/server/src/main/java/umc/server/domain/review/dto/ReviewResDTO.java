@@ -33,4 +33,14 @@ public class ReviewResDTO {
             Double star,
             String imageUrl) {
     }
+
+    //커서 기반 페이지네이션
+    @Builder
+    public record Pagination<T>(
+            List<T> data,
+            Boolean hasNext,
+            String nextCursor,
+            Integer pageSize
+    ) {
+    }
 }

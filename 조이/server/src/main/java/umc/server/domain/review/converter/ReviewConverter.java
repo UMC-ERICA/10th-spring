@@ -28,4 +28,18 @@ public class ReviewConverter {
                 .reviews(reviewGetDTOList)
                 .build();
     }
+
+    public static <T> ReviewResDTO.Pagination<T> toPagination(
+            List<T> data,
+            Boolean hasNext,
+            String nextCursor,
+            Integer pageSize
+    ) {
+        return ReviewResDTO.Pagination.<T>builder()
+                .data(data)
+                .hasNext(hasNext)
+                .nextCursor(nextCursor)
+                .pageSize(pageSize)
+                .build();
+    }
 }

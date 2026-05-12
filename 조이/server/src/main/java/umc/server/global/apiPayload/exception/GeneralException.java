@@ -14,6 +14,8 @@ import umc.server.global.apiPayload.code.GeneralErrorCode;
 @Getter
 @RequiredArgsConstructor
 public class GeneralException extends RuntimeException {
+    private final BaseErrorCode code;
+
     // @Valid 어노테이션 검증 실패 예외
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Map<String, String>>> handleMethodArgumentNotValidException(

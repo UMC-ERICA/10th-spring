@@ -32,8 +32,9 @@ public class MissionService {
             Long memberId,
             Integer pageSize,
             Integer pageNumber,
-            String sort,
-            Status status
+            Status status,
+            String sort
+
     ) {
         Sort sortInfo = (sort != null) ? Sort.by(sort) : Sort.by("id").descending();
 

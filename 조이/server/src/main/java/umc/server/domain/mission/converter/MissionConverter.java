@@ -13,7 +13,6 @@ public class MissionConverter {
                 .missionId(mission.getId())
                 .missionInfo(mission.getMissionInfo())
                 .point(mission.getPoint())
-                .status(mission.getStatus())
                 .build();
     }
 
@@ -21,7 +20,6 @@ public class MissionConverter {
     public static Mission toMission(Store store, MissionReqDTO.CreateMission dto) {
         return Mission.builder()
                 .store(store)
-                .status(dto.status())
                 .point(dto.point())
                 .missionInfo(dto.missionInfo())
                 .deadline(dto.deadline())
