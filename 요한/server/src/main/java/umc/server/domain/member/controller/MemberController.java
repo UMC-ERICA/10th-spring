@@ -1,15 +1,11 @@
 package umc.server.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.MemberRequestDTO;
 import umc.server.domain.member.dto.MemberResponseDTO;
-import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.service.MemberService;
-import umc.server.domain.mission.entity.Mission;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
 
@@ -31,17 +27,14 @@ public class MemberController {
     public ApiResponse<MemberResponseDTO.MyPageDTO> getMyPage() {
         // TODO: 로그인된 사용자의 ID를 가져온다고 가정 (1L)
         Long memberId = 1L;
-        Member member = memberService.getMyPageInfo(memberId);
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, MemberConverter.toMyPageDTO(member));
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, memberService.getMyPage(memberId));
     }
 
     @GetMapping("/me/home")
     public ApiResponse<MemberResponseDTO.HomeDTO> getHome(
-            @RequestParam(name = "page") Integer page) {
+            @RequestParam(name = "page", defaultValue = "0") Integer page) {
         // TODO: 로그인된 사용자의 ID를 가져온다고 가정 (1L)
         Long memberId = 1L;
-        Member member = memberService.getMyPageInfo(memberId);
-        Page<Mission> missionPage = memberService.getHomeMissionList(memberId, page);
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, MemberConverter.toHomeDTO(member, missionPage));
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, memberService.getMemberHome(memberId, page));
     }
 }

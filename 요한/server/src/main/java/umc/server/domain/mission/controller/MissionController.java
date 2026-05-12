@@ -22,7 +22,7 @@ public class MissionController {
     @GetMapping("/users/me/missions")
     public ApiResponse<MissionResponseDTO.MissionListDTO> getMyMissionList(
             @RequestParam(name = "status") MissionStatus status,
-            @RequestParam(name = "page") Integer page) {
+            @RequestParam(name = "page", defaultValue = "0") Integer page) {
 
         // TODO: 로그인된 사용자의 ID를 가져오는 로직 (현재는 임시값 1L 사용)
         Long memberId = 1L;

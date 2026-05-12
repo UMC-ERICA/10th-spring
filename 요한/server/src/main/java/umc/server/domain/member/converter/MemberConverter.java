@@ -16,10 +16,10 @@ public class MemberConverter {
         );
     }
 
-    public static MemberResponseDTO.HomeDTO toHomeDTO(Member member, Page<Mission> missionPage) {
+    public static MemberResponseDTO.HomeDTO toHomeDTO(Member member, Page<Mission> missionPage, Integer missionProgress) {
         return new MemberResponseDTO.HomeDTO(
                 member.getAddress().getRegion().getName(),
-                member.getCompletedMissionCount() % 10,
+                missionProgress,
                 MissionConverter.toMissionListDTOFromMission(missionPage)
         );
     }
