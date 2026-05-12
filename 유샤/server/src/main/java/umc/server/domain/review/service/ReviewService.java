@@ -1,6 +1,9 @@
 package umc.server.domain.review.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
@@ -39,5 +42,29 @@ public class ReviewService {
         Review savedReview = reviewRepository.save(review);
 
         return ReviewConverter.toPostReviewResult(savedReview);
+    }
+
+    public ReviewResDTO.Pagination<ReviewResDTO.GetReview> findReviewsPage(
+            Long memberId,
+            Integer pageNumber,
+            Integer pageSize,
+            String sort
+    ) {
+        Sort sortInfo;
+        if(sort != null){
+            sortInfo = Sort.by(sort);
+        }else{
+            sortInfo = Sort.by("id").descending();
+        }
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sortInfo);
+
+        Page<Review> reviewPage = reviewRepository.findReviews(memberId,pageRequest);
+        return ReviewConverter.toPagination(
+                reviewPage.map(ReviewConverter::toGetReview).toList(),
+                reviewPage.getNumber(),
+                reviewPage.getSize()
+        );
+
     }
 }
