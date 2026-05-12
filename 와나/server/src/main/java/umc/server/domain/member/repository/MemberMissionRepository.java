@@ -20,7 +20,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
 
     Optional<MemberMission> findByMemberAndMission(Member member, Mission mission);
 
-    @Query("SELECT mm FROM MemberMission mm WHERE mm.member = :member AND mm.status = :status AND (:cursor IS NULL OR mm.id > :cursor) ORDER BY mm.id ASC")
+    @Query("SELECT mm FROM MemberMission mm JOIN FETCH mm.mission m JOIN FETCH m.restaurant WHERE mm.member = :member AND mm.status = :status AND (:cursor IS NULL OR mm.id > :cursor) ORDER BY mm.id ASC")
     List<MemberMission> findByMemberAndStatusWithCursor(
             @Param("member") Member member,
             @Param("status") MemberMissionStatus status,

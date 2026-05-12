@@ -1,6 +1,7 @@
 package umc.server.domain.mission.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,7 @@ import umc.server.domain.mission.exception.MissionErrorCode;
 import umc.server.domain.mission.exception.MissionException;
 import umc.server.domain.mission.repository.MissionRepository;
 import umc.server.domain.restaurant.entity.Restaurant;
+import umc.server.domain.restaurant.entity.RestaurantCategory;
 import umc.server.domain.restaurant.entity.enums.FoodCategory;
 import umc.server.domain.restaurant.repository.RestaurantCategoryRepository;
 import umc.server.global.paging.CursorPageResponse;
@@ -51,8 +53,17 @@ public class MissionQueryService {
         boolean hasNext = fetched.size() > SIZE;
         List<MemberMission> page = hasNext ? fetched.subList(0, SIZE) : fetched;
 
-        List<GetMissionsResponse> contents = page.stream()
-                .map(mm -> toResponse(mm.getMission()))
+        List<Mission> missions = page.stream()
+                .map(MemberMission::getMission)
+                .collect(Collectors.toList());
+
+        Map<Long, FoodCategory> categoryMap = buildCategoryMap(
+                missions.stream().map(Mission::getRestaurant).collect(Collectors.toList())
+        );
+
+        List<GetMissionsResponse> contents = missions.stream()
+                .map(m -> GetMissionsResponse.from(m,
+                        categoryMap.getOrDefault(m.getRestaurant().getId(), FoodCategory.OTHER)))
                 .collect(Collectors.toList());
 
         Long nextCursor = hasNext ? page.get(page.size() - 1).getId() : null;
@@ -60,8 +71,15 @@ public class MissionQueryService {
     }
 
     public List<GetMissionsResponse> getMissions(MissionStatus missionStatus) {
-        return missionRepository.findAllByStatus(missionStatus).stream()
-                .map(this::toResponse)
+        List<Mission> missions = missionRepository.findAllByStatus(missionStatus);
+
+        Map<Long, FoodCategory> categoryMap = buildCategoryMap(
+                missions.stream().map(Mission::getRestaurant).collect(Collectors.toList())
+        );
+
+        return missions.stream()
+                .map(m -> GetMissionsResponse.from(m,
+                        categoryMap.getOrDefault(m.getRestaurant().getId(), FoodCategory.OTHER)))
                 .collect(Collectors.toList());
     }
 
@@ -72,13 +90,16 @@ public class MissionQueryService {
         return new GetMissionsCountResponse(totalCount, completedCount);
     }
 
-
-
-    private GetMissionsResponse toResponse(Mission mission) {
-        FoodCategory category = restaurantCategoryRepository.findFirstByRestaurant(mission.getRestaurant())
-                .map(rc -> rc.getCategory())
-                .orElse(FoodCategory.OTHER);
-        return GetMissionsResponse.from(mission, category);
+    private Map<Long, FoodCategory> buildCategoryMap(List<Restaurant> restaurants) {
+        if (restaurants.isEmpty()) {
+            return Map.of();
+        }
+        return restaurantCategoryRepository.findByRestaurantIn(restaurants).stream()
+                .collect(Collectors.toMap(
+                        rc -> rc.getRestaurant().getId(),
+                        RestaurantCategory::getCategory,
+                        (first, second) -> first
+                ));
     }
 
     private Mission findMissionById(Long missionId) {
