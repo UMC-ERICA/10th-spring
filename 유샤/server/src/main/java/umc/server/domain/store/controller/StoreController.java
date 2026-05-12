@@ -26,7 +26,7 @@ public class StoreController {
     @PostMapping("/{storeId}/reviews")
     public ApiResponse<ReviewResDTO.PostReview>  postReview(
             @PathVariable Long storeId,
-            @RequestBody ReviewReqDTO.PostReview dto
+            @RequestBody @Valid ReviewReqDTO.PostReview dto
             ){
 
         ReviewResDTO.PostReview result = reviewService.createReview(storeId, dto);

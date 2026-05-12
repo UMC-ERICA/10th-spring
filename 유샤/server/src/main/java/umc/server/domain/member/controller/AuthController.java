@@ -1,5 +1,6 @@
 package umc.server.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ApiResponse<MemberResDTO.SignUp> postSignup(
-            @RequestBody MemberReqDTO.SignUp dto
+            @RequestBody @Valid MemberReqDTO.SignUp dto
     ){
         BaseSuccessCode code = MemberSuccessCode.CREATED;
         return ApiResponse.onSuccess(code,null); // service 개발 후 넣어야함.
