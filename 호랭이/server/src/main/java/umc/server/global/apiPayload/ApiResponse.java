@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import umc.server.global.apiPayload.code.BaseErrorCode;
+import umc.server.global.apiPayload.code.BaseSuccessCode;
 
 @Getter
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class ApiResponse<T> {
     private T result;
 
     // 성공
-    public static <T> ApiResponse<T> isSuccess(T result) {
+    public static <T> ApiResponse<T> onSuccess(T result) {
         return new ApiResponse<>(
                 true,
                 "200",
@@ -32,8 +33,17 @@ public class ApiResponse<T> {
                 result
         );
     }
+    // 성공 (code 포함)
+    public static <T> ApiResponse<T> onSuccess(BaseSuccessCode code, T result) {
+        return new ApiResponse<>(
+                true,
+                code.getCode(),
+                code.getMessage(),
+                result
+        );
+    }
     //실패
-    private static <T> ApiResponse<T> onFailure(BaseErrorCode code, T result) {
+    public static <T> ApiResponse<T> onFailure(BaseErrorCode code, T result) {
         ApiResponse<T> tApiResponse = new ApiResponse<>(
                 false,
                 code.getCode(),
