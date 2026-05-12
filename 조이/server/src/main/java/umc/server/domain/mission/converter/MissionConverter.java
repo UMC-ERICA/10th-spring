@@ -33,12 +33,13 @@ public class MissionConverter {
     }
 
     // 가게 미션 생성
-    public static Mission toMission(Store store, MissionReqDTO.CreateMission dto) {
+    public static Mission toMission(Store store, Long storeId, MissionReqDTO.CreateMission dto) {
         return Mission.builder()
                 .store(store)
+                .id(storeId)
                 .status(dto.status())
                 .point(dto.point())
-                .missionInfo(dto.deadline().toString())
+                .missionInfo(dto.missionInfo())
                 .deadline(dto.deadline())
                 .build();
     }

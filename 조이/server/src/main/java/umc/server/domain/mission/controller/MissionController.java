@@ -1,9 +1,12 @@
 package umc.server.domain.mission.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +15,7 @@ import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.enums.Status;
 import umc.server.domain.mission.exception.code.MissionSuccessCode;
 import umc.server.domain.mission.service.MissionService;
+import umc.server.domain.store.entity.Store;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.BaseSuccessCode;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
@@ -53,13 +57,14 @@ public class MissionController {
     }
 
     //가게 미션 생성
-//    @PatchMapping("/stores/{storeId}/missions")
-//    public ApiResponse<void> createMission(
-//            @PathVariable Long storeId,
-//            @RequestParam MissionReqDTO.CreateMission dto
-//    ) {
-//        BaseSuccessCode code = MissionSuccessCode.CREATED;
-//        return ApiResponse.onSuccess(code, missionService.createMission(storeId, dto));
-//    }
+    @PostMapping("/stores/{storeId}/missions")
+    public ApiResponse<Void> createMission(
+            @PathVariable Store store,
+            @PathVariable Long storeId,
+            @RequestBody @Valid MissionReqDTO.CreateMission dto
+    ) {
+        BaseSuccessCode code = MissionSuccessCode.CREATED;
+        return ApiResponse.onSuccess(code, missionService.createMission(store, storeId, dto));
+    }
 
 }

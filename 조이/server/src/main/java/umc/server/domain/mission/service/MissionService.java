@@ -13,11 +13,13 @@ import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.mission.converter.MissionConverter;
+import umc.server.domain.mission.dto.MissionReqDTO.CreateMission;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.mission.repository.MemberMissionRepository;
 import umc.server.domain.mission.repository.MissionRepository;
+import umc.server.domain.store.entity.Store;
 
 @Service
 @Transactional
@@ -77,6 +79,12 @@ public class MissionService {
         );
     }
 
+    public Void createMission(Store store, Long storeId, CreateMission dto) {
+
+        Mission mission = MissionConverter.toMission(store, storeId, dto);
+        missionRepository.save(mission);
+        return null;
+    }
 }
 
 

@@ -15,6 +15,6 @@ public enum MissionSuccessCode implements BaseSuccessCode {
     ;
 
     private final HttpStatus status;
-    private final String message;
     private final String code;
+    private final String message;
 }
