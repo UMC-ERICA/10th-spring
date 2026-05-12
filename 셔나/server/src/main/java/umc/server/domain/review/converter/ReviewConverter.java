@@ -6,6 +6,7 @@ import umc.server.domain.review.entity.Reply;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.entity.ReviewPhoto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,13 +60,12 @@ public class ReviewConverter {
     }
 
     // entity -> 리뷰 목록 조회 DTO
-    public static ReviewResDTO.GetReviewListDTO toGetReviewResultDTO(List<Review> reviewList) {
-        List<ReviewResDTO.ReviewDTO> reviewDTOList = reviewList.stream()
-                .map(ReviewConverter::toReviewDTO)
-                .toList();
-
-        return ReviewResDTO.GetReviewListDTO.builder()
-                .reviewList(reviewDTOList)
+    public static <T> ReviewResDTO.GetReviewListDTO<T> toGetReviewResultDTO(List<T> reviewList, Long nextCursorId, BigDecimal nextCursorRating, Boolean hasNext) {
+        return ReviewResDTO.GetReviewListDTO.<T>builder()
+                .reviewList(reviewList)
+                .nextCursorId(nextCursorId)
+                .nextCursorRating(nextCursorRating)
+                .hasNext(hasNext)
                 .build();
     }
 }

@@ -26,7 +26,10 @@ public class ReviewResDTO {
     ) {}
 
     @Builder
-    public record GetReviewListDTO(
-            List<ReviewDTO> reviewList
+    public record GetReviewListDTO<T>(
+            List<T> reviewList,           // 실제 데이터 리스트 (ReviewDTO 등)
+            Long nextCursorId,            // 다음 요청에 사용할 ID 커서
+            BigDecimal nextCursorRating,  // 다음 요청에 사용할 별점 커서
+            Boolean hasNext               // 다음 페이지 존재 여부
     ) {}
 }

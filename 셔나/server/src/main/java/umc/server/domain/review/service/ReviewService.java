@@ -1,6 +1,7 @@
 package umc.server.domain.review.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
@@ -16,6 +17,7 @@ import umc.server.domain.store.exception.StoreException;
 import umc.server.domain.store.exception.code.StoreErrorCode;
 import umc.server.domain.store.repository.StoreRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -50,12 +52,35 @@ public class ReviewService {
         return ReviewConverter.toCreateReviewResultDTO(savedReview);
     }
 
-    public ReviewResDTO.GetReviewListDTO getReviewList(Long storeId) {
+    public ReviewResDTO.GetReviewListDTO<ReviewResDTO.ReviewDTO> getReviewList(Long storeId, Long cursorId, BigDecimal cursorRating, String sortBy, Integer size) {
         storeRepository.findById(storeId)
                 .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
 
-        List<Review> reviews = reviewRepository.findAllByStoreIdWithReply(storeId);
+        // 다음 페이지 존재 여부 확인
+        PageRequest pageRequest = PageRequest.of(0, size + 1);
+        List<Review> reviews;
 
-        return ReviewConverter.toGetReviewResultDTO(reviews);
+        // 조회 조건
+        if ("RATING".equalsIgnoreCase(sortBy)) {
+            reviews = reviewRepository.findMyReviewsByRatingDesc(storeId, cursorRating, cursorId, pageRequest);
+        } else {
+            reviews = reviewRepository.findMyReviewsByIdDesc(storeId, cursorId, pageRequest);
+        }
+
+        // 다음 페이지 존재 여부 판단
+        boolean hasNext = reviews.size() > size;
+        if (hasNext) {
+            reviews.remove(size.intValue());  // 마지막에 가져온 '확인용' 데이터 1개는 제거
+        }
+
+        // 다음 커서 정보 추출 (데이터가 있을 경우 마지막 요소 기준)
+        Long nextCursorId = reviews.isEmpty() ? null : reviews.get(reviews.size() - 1).getId();
+        BigDecimal nextCursorRating = reviews.isEmpty() ? null : reviews.get(reviews.size() - 1).getRating();
+
+        List<ReviewResDTO.ReviewDTO> reviewDTOList = reviews.stream()
+                .map(ReviewConverter::toReviewDTO)
+                .toList();
+
+        return ReviewConverter.toGetReviewResultDTO(reviewDTOList, nextCursorId, nextCursorRating, hasNext);
     }
 }
