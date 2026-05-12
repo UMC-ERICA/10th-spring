@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import umc.server.domain.member.dto.request.SignupRequest;
+import umc.server.domain.member.dto.response.GetProfileResponse;
 import umc.server.domain.member.dto.response.MySimpleAddressResponse;
 import umc.server.domain.member.exception.MemberErrorCode;
 import umc.server.domain.member.service.MemberAddrService;
@@ -33,6 +34,14 @@ public class MemberController {
         return ApiResponse.success(CommonSuccessCode.CREATED, null);
     }
 
+    @GetMapping("/members/my")
+    public ApiResponse<GetProfileResponse> getMyInfo() {
+        // 추후 Security를 통해 자신의 memberId를 가져옴. 지금은 임시로 1L 사용
+        Long memberId = 1L;
+        return ApiResponse.success(CommonSuccessCode.OK, memberService.getProfile(memberId));
+    }
+
+
 
     // 홈화면 - 내 지역 단순 조회
     @GetMapping("/locations/my")
@@ -41,4 +50,5 @@ public class MemberController {
         Long memberId = 1L;
         return ApiResponse.success(CommonSuccessCode.OK, memberAddrService.getSimpleAddress(memberId));
     }
+
 }
