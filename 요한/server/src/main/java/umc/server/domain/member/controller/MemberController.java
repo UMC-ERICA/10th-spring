@@ -5,18 +5,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.dto.MemberRequestDTO;
 import umc.server.domain.member.dto.MemberResponseDTO;
+import umc.server.domain.member.service.MemberService;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/users")
 public class MemberController {
+
+    private final MemberService memberService;
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<MemberResponseDTO.JoinResultDTO> join(@RequestBody MemberRequestDTO.JoinDTO request) {
-        // 서비스 로직 호출 부분 (현재는 생략)
+        // TODO: 추후 구현
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, null);
+    }
+
+    @GetMapping("/me")
+    public ApiResponse<MemberResponseDTO.MyPageDTO> getMyPage() {
+        // TODO: 로그인된 사용자의 ID를 가져온다고 가정 (1L)
+        Long memberId = 1L;
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, memberService.getMyPage(memberId));
+    }
+
+    @GetMapping("/me/home")
+    public ApiResponse<MemberResponseDTO.HomeDTO> getHome(
+            @RequestParam(name = "page", defaultValue = "0") Integer page) {
+        // TODO: 로그인된 사용자의 ID를 가져온다고 가정 (1L)
+        Long memberId = 1L;
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, memberService.getMemberHome(memberId, page));
     }
 }

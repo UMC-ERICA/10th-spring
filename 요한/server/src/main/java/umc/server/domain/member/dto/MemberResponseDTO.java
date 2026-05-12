@@ -8,4 +8,18 @@ public class MemberResponseDTO {
             LocalDateTime createdAt
     ) {
     }
+
+    public record MyPageDTO(
+            String username,
+            String email,
+            Integer currentPoint
+    ) {
+    }
+
+    public record HomeDTO(
+            String regionName,
+            Integer missionProgress,
+            umc.server.domain.mission.dto.MissionResponseDTO.MissionListDTO availableMissions
+    ) {
+    }
 }
