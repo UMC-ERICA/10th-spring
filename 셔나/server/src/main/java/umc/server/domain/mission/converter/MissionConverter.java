@@ -1,5 +1,6 @@
 package umc.server.domain.mission.converter;
 
+import org.springframework.data.domain.Page;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.MemberMission;
 import umc.server.domain.mission.entity.Mission;
@@ -21,13 +22,18 @@ public class MissionConverter {
     }
 
     // entity -> 미션 목록 조회 DTO
-    public static MissionResDTO.GetMissionListDTO toGetMissionListDTO(List<MemberMission> memberMissionList) {
-        List<MissionResDTO.MissionDTO> missionDTOList = memberMissionList.stream()
+    public static MissionResDTO.GetMissionListDTO toGetMissionListDTO(Page<MemberMission> memberMissionPage) {
+        List<MissionResDTO.MissionDTO> missionDTOList = memberMissionPage.stream()
                 .map(MissionConverter::toMissionDTO)
                 .toList();
 
         return MissionResDTO.GetMissionListDTO.builder()
                 .missionList(missionDTOList)
+                .pageSize(memberMissionPage.getSize())                // 한 페이지 크기
+                .totalPage(memberMissionPage.getTotalPages())         // 전체 페이지 수
+                .totalElements(memberMissionPage.getTotalElements())  // 전체 데이터 개수
+                .isFirst(memberMissionPage.isFirst())                 // 첫 페이지 여부
+                .isLast(memberMissionPage.isLast())                   // 마지막 페이지 여부
                 .build();
     }
 

@@ -1,6 +1,9 @@
 package umc.server.domain.mission.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.mission.converter.MissionConverter;
@@ -23,10 +26,15 @@ public class MissionService {
     private final MemberMissionRepository memberMissionRepository;
     private final MissionRepository missionRepository;
 
-    public MissionResDTO.GetMissionListDTO getMissionList(Long memberId, MissionStatus missionStatus) {
-        List<MemberMission> memberMissionList = memberMissionRepository.findAllByMemberIdAndMissionStatus(memberId, missionStatus);
+    public MissionResDTO.GetMissionListDTO getMissionList(Long memberId, MissionStatus missionStatus, Integer page, Integer size) {
+        // '최신순' 정렬을 기본값으로 강제 주입
+        Sort defaultSort = Sort.by(Sort.Direction.DESC, "createdAt");
 
-        return MissionConverter.toGetMissionListDTO(memberMissionList);
+        // 페이지네이션 설정
+        PageRequest pageRequest = PageRequest.of(page, size, defaultSort);
+
+        Page<MemberMission> memberMissionPage = memberMissionRepository.findAllByMemberIdAndMissionStatus(memberId, missionStatus, pageRequest);
+        return MissionConverter.toGetMissionListDTO(memberMissionPage);
     }
 
     @Transactional
