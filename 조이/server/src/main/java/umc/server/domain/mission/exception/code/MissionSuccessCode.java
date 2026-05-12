@@ -2,9 +2,7 @@ package umc.server.domain.mission.exception.code;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseBody;
 import umc.server.global.apiPayload.code.BaseSuccessCode;
 
 @Getter

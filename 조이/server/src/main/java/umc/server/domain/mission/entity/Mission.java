@@ -49,8 +49,7 @@ public class Mission extends BaseEntity {
 
     @Column(name = "point")
     private Integer point;
-    @Column(name = "status")
-    private Status status;
+
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissions;

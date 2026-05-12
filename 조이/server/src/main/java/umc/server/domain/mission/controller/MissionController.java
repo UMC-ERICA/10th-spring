@@ -15,7 +15,6 @@ import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.enums.Status;
 import umc.server.domain.mission.exception.code.MissionSuccessCode;
 import umc.server.domain.mission.service.MissionService;
-import umc.server.domain.store.entity.Store;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.BaseSuccessCode;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
@@ -30,6 +29,9 @@ public class MissionController {
     @GetMapping
     public ApiResponse<MissionResDTO.MissionsGetResDTO> getMissionList(
             @RequestParam(name = "memberId") Long memberId,
+            @RequestParam Integer pageSize,
+            @RequestParam Integer pageNumber,
+            @RequestParam(required = false) String sort,
             @RequestParam(name = "status") Status status
     ) {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
@@ -59,12 +61,11 @@ public class MissionController {
     //가게 미션 생성
     @PostMapping("/stores/{storeId}/missions")
     public ApiResponse<Void> createMission(
-            @PathVariable Store store,
             @PathVariable Long storeId,
             @RequestBody @Valid MissionReqDTO.CreateMission dto
     ) {
         BaseSuccessCode code = MissionSuccessCode.CREATED;
-        return ApiResponse.onSuccess(code, missionService.createMission(store, storeId, dto));
+        return ApiResponse.onSuccess(code, missionService.createMission(storeId, dto));
     }
 
 }

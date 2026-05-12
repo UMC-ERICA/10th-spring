@@ -16,6 +16,8 @@ public class MissionResDTO {
 
     @Builder
     public record MissionsGetResDTO(
+            Long memberId,
+            Status status,
             List<MissionsResDTO> missions
     ) {
     }

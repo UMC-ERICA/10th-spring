@@ -1,6 +1,7 @@
 package umc.server.domain.mission.entity.mapping;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 import umc.server.domain.member.entity.Food;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.mission.entity.Mission;
+import umc.server.domain.mission.enums.Status;
 import umc.server.global.entity.BaseEntity;
 
 @Entity
@@ -31,6 +33,9 @@ public class MemberMission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "status")
+    private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
