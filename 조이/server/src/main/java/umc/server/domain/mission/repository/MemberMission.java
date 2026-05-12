@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import umc.server.domain.mission.entity.Mission;
 
 @Repository
-public interface MissionRepository extends JpaRepository<Mission, Long> {
-    List<MemberMission> findByMemberId(Long memberId);
+public interface MemberMission extends JpaRepository<MemberMission, Long> {
+    List<Mission> findByMemberId(Long memberId);
 }
