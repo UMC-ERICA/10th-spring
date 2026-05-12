@@ -92,4 +92,28 @@ public class MissionService {
                 missionList.getSize()
         );
     }
+
+    public MissionResDTO.Pagination<MissionResDTO.GetMission> getMissionsPage(
+            Long memberId,
+            Boolean isCompleted,
+            Integer pageSize,
+            Integer pageNumber,
+            String sort
+    ){
+        Sort sortInfo;
+        if(sort != null){
+            sortInfo = Sort.by(sort);
+        }else{
+            sortInfo = Sort.by("id").descending();
+        }
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sortInfo);
+
+        Page<Mission> missionsPage = memberMissionRepository.findMissions(memberId,isCompleted,pageRequest);
+        return MissionConverter.toPagination(
+                missionsPage.map(MissionConverter::toGetMission).toList(),
+                missionsPage.getNumber(),
+                missionsPage.getSize()
+        );
+    }
 }
