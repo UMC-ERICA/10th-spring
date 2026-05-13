@@ -2,12 +2,14 @@ package umc.server.domain.review.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.global.entity.BaseEntity;
 
 @Entity
 @Table(name = "review_photo")
 @SQLDelete(sql = "UPDATE review_photo SET deleted_at = NOW() WHERE review_photo_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

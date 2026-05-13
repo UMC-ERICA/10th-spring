@@ -2,6 +2,7 @@ package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.domain.member.enums.FoodCategory;
 import umc.server.global.entity.BaseEntity;
@@ -9,6 +10,7 @@ import umc.server.global.entity.BaseEntity;
 @Entity
 @Table(name = "preference_food")
 @SQLDelete(sql = "UPDATE preference_food SET deleted_at = NOW() WHERE preference_food_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

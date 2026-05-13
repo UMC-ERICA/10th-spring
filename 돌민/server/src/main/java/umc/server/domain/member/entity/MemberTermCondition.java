@@ -2,6 +2,7 @@ package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.global.entity.BaseEntity;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "member_term_condition")
 @SQLDelete(sql = "UPDATE member_term_condition SET deleted_at = NOW() WHERE member_term_condition_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

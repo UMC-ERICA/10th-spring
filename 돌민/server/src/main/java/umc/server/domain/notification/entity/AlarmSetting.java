@@ -2,6 +2,7 @@ package umc.server.domain.notification.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.notification.enums.AlarmSettingType;
@@ -10,6 +11,7 @@ import umc.server.global.entity.BaseEntity;
 @Entity
 @Table(name = "alarm_setting")
 @SQLDelete(sql = "UPDATE alarm_setting SET deleted_at = NOW() WHERE alarm_setting_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

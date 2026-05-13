@@ -66,13 +66,10 @@ public class MemberService {
             Pageable pageable
     ) {
         validateMember(memberId);
-        if (request.getStatus() == null) {
-            throw new MemberException("Member mission status is required.");
-        }
 
         Page<MemberMissionResponse> page = memberMissionRepository.findMemberMissionsByMemberIdAndStatus(
                 memberId,
-                request.getStatus(),
+                request.status(),
                 pageable
         );
         return PageResponse.from(page);

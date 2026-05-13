@@ -2,6 +2,7 @@ package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.domain.inquiry.entity.Inquiry;
 import umc.server.domain.member.enums.Gender;
@@ -20,6 +21,7 @@ import java.util.List;
 @Entity
 @Table(name = "member")
 @SQLDelete(sql = "UPDATE member SET deleted_at = NOW() WHERE member_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

@@ -2,12 +2,14 @@ package umc.server.domain.store.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.global.entity.BaseEntity;
 
 @Entity
 @Table(name = "store_address")
 @SQLDelete(sql = "UPDATE store_address SET deleted_at = NOW() WHERE store_address_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -33,6 +35,9 @@ public class StoreAddress extends BaseEntity {
 
     @Column(name = "latitude")
     private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)

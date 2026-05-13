@@ -1,5 +1,6 @@
 package umc.server.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -51,7 +52,7 @@ public class MemberController {
     @GetMapping("/{memberId}/missions")
     public ApiResponse<PageResponse<MemberMissionResponse>> getMemberMissions(
             @PathVariable Long memberId,
-            @ModelAttribute MemberMissionSearchRequest request,
+            @Valid @ModelAttribute MemberMissionSearchRequest request,
             @PageableDefault(size = 10) Pageable pageable
     ) {
         return ApiResponse.onSuccess(memberService.getMemberMissions(memberId, request, pageable));

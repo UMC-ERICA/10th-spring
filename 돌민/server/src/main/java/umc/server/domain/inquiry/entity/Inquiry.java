@@ -2,6 +2,7 @@ package umc.server.domain.inquiry.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.domain.inquiry.enums.InquiryStatus;
 import umc.server.domain.inquiry.enums.InquiryType;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "inquiry")
 @SQLDelete(sql = "UPDATE inquiry SET deleted_at = NOW() WHERE inquiry_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

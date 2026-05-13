@@ -2,6 +2,7 @@ package umc.server.domain.mission.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import lombok.*;
 import umc.server.domain.mission.enums.MissionStatus;
 import umc.server.domain.store.entity.Store;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "mission")
 @SQLDelete(sql = "UPDATE mission SET deleted_at = NOW() WHERE mission_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
