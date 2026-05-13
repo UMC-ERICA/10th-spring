@@ -1,76 +1,76 @@
 package umc.server.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import umc.server.domain.member.dto.request.HomeSearchRequest;
+import umc.server.domain.member.dto.response.HomeResponse;
 import umc.server.domain.member.dto.response.MemberLocationResponse;
 import umc.server.domain.member.dto.response.MemberPointResponse;
+import umc.server.domain.member.dto.response.MyPageResponse;
+import umc.server.domain.member.service.MemberService;
+import umc.server.domain.mission.dto.request.MemberMissionSearchRequest;
 import umc.server.domain.mission.dto.response.MemberMissionResponse;
 import umc.server.domain.notification.dto.response.CompletedMissionCountResponse;
 import umc.server.global.apiPayload.ApiResponse;
-
-import java.util.List;
+import umc.server.global.apiPayload.PageResponse;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
 public class MemberController {
 
+    private final MemberService memberService;
+
     @GetMapping("/{memberId}/location")
     public ApiResponse<MemberLocationResponse> getMemberLocation(
             @PathVariable Long memberId
     ) {
-        MemberLocationResponse result = new MemberLocationResponse(
-                memberId,
-                "서울특별시",
-                "강남구",
-                "역삼동",
-                "상세주소"
-        );
-
-        return ApiResponse.onSuccess(result);
+        return ApiResponse.onSuccess(memberService.getMemberLocation(memberId));
     }
 
     @GetMapping("/{memberId}/point")
     public ApiResponse<MemberPointResponse> getMemberPoint(
             @PathVariable Long memberId
     ) {
-        MemberPointResponse result = new MemberPointResponse(
-                memberId,
-                1000
-        );
-
-        return ApiResponse.onSuccess(result);
+        return ApiResponse.onSuccess(memberService.getMemberPoint(memberId));
     }
 
     @GetMapping("/{memberId}/missions/complete")
     public ApiResponse<CompletedMissionCountResponse> getCompletedMissionCount(
             @PathVariable Long memberId
     ) {
-        CompletedMissionCountResponse result = new CompletedMissionCountResponse(
-                memberId,
-                5L
-        );
-
-        return ApiResponse.onSuccess(result);
+        return ApiResponse.onSuccess(memberService.getCompletedMissionCount(memberId));
     }
 
     @GetMapping("/{memberId}/missions")
-    public ApiResponse<List<MemberMissionResponse>> getMemberMissions(
+    public ApiResponse<PageResponse<MemberMissionResponse>> getMemberMissions(
+            @PathVariable Long memberId,
+            @Valid @ModelAttribute MemberMissionSearchRequest request,
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
+        return ApiResponse.onSuccess(memberService.getMemberMissions(memberId, request, pageable));
+    }
+
+    @GetMapping("/{memberId}/mypage")
+    public ApiResponse<MyPageResponse> getMyPage(
             @PathVariable Long memberId
     ) {
-        List<MemberMissionResponse> result = List.of(
-                new MemberMissionResponse(
-                        1L,
-                        10L,
-                        "리뷰 작성하기",
-                        "IN_PROGRESS",
-                        100
-                )
-        );
+        return ApiResponse.onSuccess(memberService.getMyPage(memberId));
+    }
 
-        return ApiResponse.onSuccess(result);
+    @GetMapping("/{memberId}/home")
+    public ApiResponse<HomeResponse> getHome(
+            @PathVariable Long memberId,
+            @ModelAttribute HomeSearchRequest request,
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
+        return ApiResponse.onSuccess(memberService.getHome(memberId, request, pageable));
     }
 }
