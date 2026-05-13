@@ -1,5 +1,6 @@
 package umc.server.domain.review.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.review.dto.ReviewReqDTO;
@@ -17,9 +18,9 @@ public class ReviewController {
     @PostMapping("/stores/{storeId}")
     public ApiResponse<Void> createdReview(
             @PathVariable Long storeId,
-            @RequestBody ReviewReqDTO.CreateReview request
+            @RequestBody @Valid ReviewReqDTO.CreateReview request
     ) {
         reviewService.createReview(storeId, request);
-        return ApiResponse.isSuccess(null);
+        return ApiResponse.onSuccess(null);
     }
 }

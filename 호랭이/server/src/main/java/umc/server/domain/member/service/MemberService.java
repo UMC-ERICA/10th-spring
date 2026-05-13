@@ -13,6 +13,18 @@ import umc.server.domain.member.repository.MemberRepository;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-    public Object singleParameter(String queryParameter) {
+
+    private final MemberRepository memberRepository;
+    private final MemberConverter memberConverter;
+
+    public String singleParameter(String queryParameter) {
+        return queryParameter;
+    } //테스트용
+
+    public MemberResDTO.MemberInfo createMember(MemberReqDTO.CreateMember request){
+        Member member = MemberConverter.toMember(request);
+        Member saved = memberRepository.save(member);
+        return MemberConverter.toMemberInfo(saved);
     }
+
 }
