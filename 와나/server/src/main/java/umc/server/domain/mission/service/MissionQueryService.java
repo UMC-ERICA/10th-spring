@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ import umc.server.domain.restaurant.entity.Restaurant;
 import umc.server.domain.restaurant.entity.RestaurantCategory;
 import umc.server.domain.restaurant.entity.enums.FoodCategory;
 import umc.server.domain.restaurant.repository.RestaurantCategoryRepository;
-import umc.server.global.paging.CursorPageResponse;
+import umc.server.global.paging.OffsetPageResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -37,23 +38,19 @@ public class MissionQueryService {
     private final MemberMissionRepository memberMissionRepository;
     private final RestaurantCategoryRepository restaurantCategoryRepository;
 
-    private static final int SIZE = 10;
-
-    public CursorPageResponse<GetMissionsResponse> getMyMissions(
+    public OffsetPageResponse<GetMissionsResponse> getMyMissions(
             Long memberId,
             MemberMissionStatus status,
-            Long cursor
+            int page,
+            int size
     ) {
         Member member = findMemberById(memberId);
 
-        List<MemberMission> fetched = memberMissionRepository.findByMemberAndStatusWithCursor(
-                member, status, cursor, PageRequest.of(0, SIZE + 1)
+        Page<MemberMission> memberMissionPage = memberMissionRepository.findByMemberAndStatusWithOffset(
+                member, status, PageRequest.of(page, size)
         );
 
-        boolean hasNext = fetched.size() > SIZE;
-        List<MemberMission> page = hasNext ? fetched.subList(0, SIZE) : fetched;
-
-        List<Mission> missions = page.stream()
+        List<Mission> missions = memberMissionPage.getContent().stream()
                 .map(MemberMission::getMission)
                 .collect(Collectors.toList());
 
@@ -61,13 +58,13 @@ public class MissionQueryService {
                 missions.stream().map(Mission::getRestaurant).collect(Collectors.toList())
         );
 
-        List<GetMissionsResponse> contents = missions.stream()
-                .map(m -> GetMissionsResponse.from(m,
-                        categoryMap.getOrDefault(m.getRestaurant().getId(), FoodCategory.OTHER)))
-                .collect(Collectors.toList());
+        Page<GetMissionsResponse> responsePage = memberMissionPage.map(mm -> {
+            Mission m = mm.getMission();
+            return GetMissionsResponse.from(m,
+                    categoryMap.getOrDefault(m.getRestaurant().getId(), FoodCategory.OTHER));
+        });
 
-        Long nextCursor = hasNext ? page.get(page.size() - 1).getId() : null;
-        return new CursorPageResponse<>(contents, nextCursor, hasNext);
+        return OffsetPageResponse.from(responsePage);
     }
 
     public List<GetMissionsResponse> getMissions(MissionStatus missionStatus) {
