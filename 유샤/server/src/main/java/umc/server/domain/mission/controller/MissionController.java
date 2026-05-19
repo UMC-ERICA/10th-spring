@@ -19,8 +19,8 @@ public class MissionController {
     public ApiResponse<MissionResDTO.Pagination<MissionResDTO.GetMission>> getMissionList(
             @RequestParam("memberId") Long memberId,
             @RequestParam("isCompleted") Boolean isCompleted,
-            @RequestParam Integer pageSize,
-            @RequestParam Integer pageNumber,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer pageNumber,
             @RequestParam(required = false) String sort
     ){
         MissionResDTO.Pagination<MissionResDTO.GetMission> result = missionService.getMissionsPage(memberId, isCompleted, pageSize, pageNumber, sort);

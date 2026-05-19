@@ -25,6 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MissionService {
 
     private final MemberMissionRepository memberMissionRepository;

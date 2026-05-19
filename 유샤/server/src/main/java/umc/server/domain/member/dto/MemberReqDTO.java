@@ -1,5 +1,6 @@
 package umc.server.domain.member.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import umc.server.domain.member.enums.Gender;
 import umc.server.domain.member.enums.Provider;
@@ -17,7 +18,7 @@ public class MemberReqDTO {
             Provider provider,
             @NotNull(message = "소셜로그인UID는 필수입니다.")
             String socialUid,
-            @NotNull(message = "이름은 필수입니다.")
+            @NotBlank(message = "이름은 필수입니다.")
             String name,
             @NotNull(message = "성별은 필수입니다.")
             Gender gender,
