@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ import umc.server.global.entity.BaseEntity;
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "review")
 public class Review extends BaseEntity {
@@ -37,7 +38,7 @@ public class Review extends BaseEntity {
     private String reviewContent;
 
     @Column(name = "star", nullable = false)
-    private Double Star;
+    private Double star;
 
     @Column(name = "img_url", nullable = false)
     private String imageUrl;

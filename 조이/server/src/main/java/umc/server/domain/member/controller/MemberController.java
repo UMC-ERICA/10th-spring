@@ -1,5 +1,6 @@
 package umc.server.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,8 @@ import umc.server.global.apiPayload.code.GeneralSuccessCode;
 public class MemberController {
 
     @PostMapping("/signup")
-    public ApiResponse<JoinResDTO> join(@RequestBody MemberReqDTO.JoinReqDTO dto
+    public ApiResponse<JoinResDTO> join(
+            @RequestBody @Valid MemberReqDTO.JoinReqDTO dto
     ) {
         return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, null);
     }
