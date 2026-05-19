@@ -21,7 +21,8 @@ public class ReviewResDTO {
     @Builder
     public record Pagination<T>(
             List<T> data,
-            Integer pageNumber,
+            Boolean hasNext,
+            String nextCursor,
             Integer pageSize
     ){}
 }

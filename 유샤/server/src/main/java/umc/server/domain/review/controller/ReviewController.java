@@ -16,17 +16,17 @@ import umc.server.global.apiPayload.code.BaseSuccessCode;
 @RequestMapping("/api/reviews")
 public class ReviewController {
 
-    public final ReviewService reviewService;
+    private final ReviewService reviewService;
 
     @GetMapping
     public ApiResponse<ReviewResDTO.Pagination<ReviewResDTO.GetReview>> getReviews(
             @RequestParam("memberId") Long memberId,
-            @RequestParam Integer pageNumber,
             @RequestParam Integer pageSize,
-            @RequestParam(required = false) String sort
+            @RequestParam String cursor,
+            @RequestParam String query
     ){
-        ReviewResDTO.Pagination<ReviewResDTO.GetReview> result = reviewService.findReviewsPage(memberId,pageNumber,pageSize,sort);
         BaseSuccessCode code = ReviewSuccessCode.OK;
+        ReviewResDTO.Pagination<ReviewResDTO.GetReview> result = reviewService.findReviewsPage(memberId,pageSize,cursor,query);
 
         return ApiResponse.onSuccess(code,result);
     }
