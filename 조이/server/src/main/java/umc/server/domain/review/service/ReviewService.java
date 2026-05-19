@@ -41,7 +41,7 @@ public class ReviewService {
 
         Slice<Review> reviewList;
 
-        if (!cursor.equals("-1")) {
+        if ((cursor != null && !cursor.equals("-1"))) {
             String[] cursorSplit = cursor.split(":");
             switch (query.toLowerCase()) {
                 case "id":
@@ -52,7 +52,7 @@ public class ReviewService {
                     reviewList = reviewRepository.findByMemberIdOrderByStarDesc(memberId, pageRequest);
                     break;
                 default:
-                    throw new ReviewException(ReviewErrorCode.QUERY_NOT_FOUND.getMessage());
+                    throw new ReviewException(ReviewErrorCode.QUERY_NOT_FOUND);
             }
         } else {
             reviewList = reviewRepository.findReviewByMemberId_IdOrderByIdDesc(memberId, pageRequest);

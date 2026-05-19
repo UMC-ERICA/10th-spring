@@ -12,13 +12,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.prefs.BackingStoreException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import umc.server.domain.member.entity.Food;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.enums.Status;
@@ -47,4 +45,8 @@ public class MemberMission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
+
+    public void complete() {
+        this.status = Status.COMPLETED;
+    }
 }

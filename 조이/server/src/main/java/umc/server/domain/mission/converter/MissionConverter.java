@@ -4,15 +4,17 @@ import java.util.List;
 import umc.server.domain.mission.dto.MissionReqDTO;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.Mission;
+import umc.server.domain.mission.enums.Status;
 import umc.server.domain.store.entity.Store;
 
 public class MissionConverter {
     //미션가져오기
-    public static MissionResDTO.MissionsResDTO toMissionsResDTO(Mission mission) {
+    public static MissionResDTO.MissionsResDTO toMissionsResDTO(Mission mission, Status status) {
         return MissionResDTO.MissionsResDTO.builder()
                 .missionId(mission.getId())
                 .missionInfo(mission.getMissionInfo())
                 .point(mission.getPoint())
+                .status(status)
                 .build();
     }
 

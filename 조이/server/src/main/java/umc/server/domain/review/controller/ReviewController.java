@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import umc.server.domain.review.dto.ReviewReqDTO;
 import umc.server.domain.review.dto.ReviewResDTO;
@@ -50,9 +51,9 @@ public class ReviewController {
     @GetMapping("/member/{memberId}")
     public ApiResponse<ReviewResDTO.Pagination<ReviewResDTO.ReviewGetDTO>> getReviewListByMember(
             @PathVariable(name = "memberId") Long memberId,
-            @RequestBody Integer pageSize,
-            @RequestBody String cursor,
-            @RequestBody String query
+            @RequestParam Integer pageSize,
+            @RequestParam(required = false) String cursor,
+            @RequestParam String query
 
     ) {
         BaseSuccessCode code = ReviewSuccessCode.OK;

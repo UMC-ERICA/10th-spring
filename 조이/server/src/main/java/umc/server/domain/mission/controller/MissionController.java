@@ -14,7 +14,8 @@ import umc.server.domain.mission.dto.MissionReqDTO;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.enums.Status;
 import umc.server.domain.mission.exception.code.MissionSuccessCode;
-import umc.server.domain.mission.service.MissionService;
+import umc.server.domain.mission.service.MissionCommandService;
+import umc.server.domain.mission.service.MissionQueryService;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.BaseSuccessCode;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
@@ -23,18 +24,21 @@ import umc.server.global.apiPayload.code.GeneralSuccessCode;
 @RequiredArgsConstructor
 @RequestMapping("/api/missions")
 public class MissionController {
-    private final MissionService missionService;
+    private final MissionCommandService missionCommandService;
+    private final MissionQueryService missionQueryService;
 
     //내 미션리스트 조회
     @GetMapping
-    public ApiResponse<MissionResDTO.MissionsGetResDTO> getMissionList(
+    public ApiResponse<MissionResDTO.Pagination<MissionResDTO.MissionsResDTO>> getMissionList(
             @RequestParam(name = "memberId") Long memberId,
             @RequestParam Integer pageSize,
             @RequestParam Integer pageNumber,
             @RequestParam(required = false) String sort,
             @RequestParam(name = "status") Status status
     ) {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
+        BaseSuccessCode code = MissionSuccessCode.OK;
+        return ApiResponse.onSuccess(code,
+                missionQueryService.getMyMission(memberId, pageSize, pageNumber, status, sort));
     }
 
     //미션 성공
@@ -43,7 +47,8 @@ public class MissionController {
             @PathVariable(name = "missionId") Long missionId,
             @RequestParam(name = "memberId") Long memberId //보안위험이있어서 나중에 토큰 처리를 해야함!!!
     ) {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, null);
+        BaseSuccessCode code = MissionSuccessCode.OK;
+        return ApiResponse.onSuccess(code, missionCommandService.completeMission(memberId, missionId));
     }
 
     //가게 내 미션 조회
@@ -55,7 +60,7 @@ public class MissionController {
             @RequestParam(required = false) String sort
     ) {
         BaseSuccessCode code = MissionSuccessCode.OK;
-        return ApiResponse.onSuccess(code, missionService.getMissions(storeId, pageSize, pageNumber, sort));
+        return ApiResponse.onSuccess(code, missionQueryService.getMissions(storeId, pageSize, pageNumber, sort));
     }
 
     //가게 미션 생성
@@ -65,7 +70,7 @@ public class MissionController {
             @RequestBody @Valid MissionReqDTO.CreateMission dto
     ) {
         BaseSuccessCode code = MissionSuccessCode.CREATED;
-        return ApiResponse.onSuccess(code, missionService.createMission(storeId, dto));
+        return ApiResponse.onSuccess(code, missionCommandService.createMission(storeId, dto));
     }
 
 }

@@ -1,5 +1,6 @@
 package umc.server.domain.mission.service;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,25 +8,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.mission.converter.MissionConverter;
-import umc.server.domain.mission.dto.MissionReqDTO.CreateMission;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.mission.enums.Status;
 import umc.server.domain.mission.repository.MemberMissionRepository;
 import umc.server.domain.mission.repository.MissionRepository;
-import umc.server.domain.store.entity.Store;
-import umc.server.domain.store.exception.StoreException;
-import umc.server.domain.store.exception.code.StoreErrorCode;
 import umc.server.domain.store.repository.StoreRepository;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MissionService {
+public class MissionQueryService {
     private final MissionRepository missionRepository;
     private final MemberMissionRepository memberMissionRepository;
-    private final StoreRepository storeRepository;
 
     //진행여부에 따른 미션조회
     public MissionResDTO.Pagination<MissionResDTO.MissionsResDTO> getMyMission(
@@ -44,7 +40,7 @@ public class MissionService {
                 memberMissionRepository.findByMemberIdAndMissionStatus(memberId, status, pageRequest);
 
         return MissionConverter.toPagination(
-                memberMissions.map(mm -> MissionConverter.toMissionsResDTO(mm.getMission())).toList(),
+                memberMissions.map(mm -> MissionConverter.toMissionsResDTO(mm.getMission(), mm.getStatus())).toList(),
                 memberMissions.getNumber(),
                 memberMissions.getSize()
         );
@@ -70,20 +66,10 @@ public class MissionService {
         Page<Mission> missionsList = missionRepository.findByStoreId(storeId, pageRequest);
 
         return MissionConverter.toPagination(
-                missionsList.map(MissionConverter::toMissionsResDTO).toList(),
+                missionsList.map(m -> MissionConverter.toMissionsResDTO(m, null)).toList(),
                 missionsList.getNumber(),
                 missionsList.getSize()
         );
     }
 
-
-    public Void createMission(Long storeId, CreateMission dto) {
-        Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
-        Mission mission = MissionConverter.toMission(store, dto);
-        missionRepository.save(mission);
-        return null;
-    }
 }
-
-
