@@ -1,11 +1,12 @@
 package umc.server.domain.store.entitty;
 
 import jakarta.persistence.*;
-import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Locale;
 
 @Entity
 @Getter
@@ -27,5 +28,5 @@ public class Store {
 
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private Locale.Category category;
 }

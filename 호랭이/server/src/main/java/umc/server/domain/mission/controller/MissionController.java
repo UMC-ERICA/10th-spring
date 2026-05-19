@@ -17,10 +17,10 @@ public class MissionController {
     private final MissionService missionService;
 
     @GetMapping
-    public ApiResponse<List<MissionResDTO.MissionStatusList>> getMissions(
+    public ApiResponse<List<MissionResDTO.MissionDetail>> getMissions(
             @RequestParam(required = false) MissionStatus status
     ){
-        return ApiResponse.isSuccess(
+        return ApiResponse.onSuccess(
                 missionService.getMissions(status)
         );
     }

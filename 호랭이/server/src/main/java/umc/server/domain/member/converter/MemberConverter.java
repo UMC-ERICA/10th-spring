@@ -6,14 +6,14 @@ import umc.server.domain.member.entity.Member; // 엔티티 경로 확인 필요
 
 public class MemberConverter {
 
-    public static Member toMember(MemberReqDTO.CreateMember dto) {
+    public static Member toMember(MemberReqDTO.CreateMember dto, String encodedPassword) {
         return Member.builder()
                 .name(dto.name())
                 .birth(dto.birth())
                 .address(dto.address())
                 .detailAddress(dto.detailAddress())
                 .email(dto.email())
-                .pw(dto.pw())
+                .pw(encodedPassword)
                 .build();
     }
 

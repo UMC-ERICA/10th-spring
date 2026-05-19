@@ -17,12 +17,12 @@ public class MemberController {
 
     private final MemberService memberService; //스프링이 자동주입
 
-    @PostMapping("/")
+    @PostMapping("/members")
     public ApiResponse<MemberResDTO.MemberInfo> createMember(
             @RequestBody@Valid MemberReqDTO.CreateMember request
     ){
         BaseSuccessCode code = GeneralSuccessCode.CREATED;
-        return ApiResponse.onSuccess(code,memberService.createMember(request));
+        return ApiResponse.onSuccess(code,memberService.createMember(request)); //request -> createMember 넘기는 파라미터
     }
     @GetMapping("/query-parameter")
     public ApiResponse<String> testQueryParameter(

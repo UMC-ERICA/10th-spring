@@ -1,6 +1,8 @@
 package umc.server.domain.mission.dto;
 
 import lombok.Builder;
+import umc.server.domain.mission.enums.MissionStatus;
+
 import java.util.List;
 
 public class MissionResDTO {
@@ -19,7 +21,8 @@ public class MissionResDTO {
             String storeName,
             String category,
             String content,
-            Integer dDay
+            Integer dDay,
+            MissionStatus status
     ) {}
 
     @Builder

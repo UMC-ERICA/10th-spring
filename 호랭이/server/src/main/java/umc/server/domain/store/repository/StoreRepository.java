@@ -1,4 +1,7 @@
 package umc.server.domain.store.repository;
 
-public interface StoreRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import umc.server.domain.store.entitty.Store;
+
+public interface StoreRepository extends JpaRepository<Store, Long> {
 }

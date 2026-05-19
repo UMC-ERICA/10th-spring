@@ -1,6 +1,7 @@
 package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import umc.server.domain.member.entity.mapping.MemberTerm;
 import umc.server.domain.member.enums.Gender;
 import umc.server.domain.member.enums.SocialType;
 import umc.server.domain.mission.enums.Address;
-import umc.server.global.apiPayload.code.BaseEntity;
+import umc.server.global.entity.BaseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -49,7 +50,7 @@ public class Member extends BaseEntity {
     @Column(name = "address", nullable = false)
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Address address;
+    private Address address = Address.NONE;
 
     @Column(name = "detil_address", nullable = false)
     private String detailAddress;
@@ -84,5 +85,10 @@ public class Member extends BaseEntity {
 
     @Column(name = "pw",nullable = false)
     private String pw;
+
+    //Spring Security
+    public @NotNull String getPassword() {
+        return pw;
+    }
 }
 
