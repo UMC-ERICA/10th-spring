@@ -5,9 +5,10 @@ import lombok.Builder;
 public class MemberResDTO {
 
     @Builder
-    public record RequestBody(
+    public record MemberInfo(
+            Long memberId,
             String name,
-            String profileurl,
+            //String profileurl,
             String email,
             String phoneNumber,
             Integer point
