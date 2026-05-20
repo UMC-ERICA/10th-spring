@@ -9,6 +9,8 @@ import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.MemberRepository;
+import umc.server.global.apiPayload.code.GeneralErrorCode;
+import umc.server.global.apiPayload.exception.ProjectException;
 import umc.server.global.security.entity.AuthMember;
 
 @Service
@@ -22,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             String username
     )throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(username)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(()-> new ProjectException(GeneralErrorCode.NOT_FOUND));
         return new AuthMember(member);
     }
 }

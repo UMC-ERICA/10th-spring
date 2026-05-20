@@ -9,7 +9,7 @@ import umc.server.global.apiPayload.code.BaseErrorCode;
 import umc.server.global.apiPayload.code.GeneralErrorCode;
 
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 
 public class CustomAccessDenied implements AccessDeniedHandler {
 
