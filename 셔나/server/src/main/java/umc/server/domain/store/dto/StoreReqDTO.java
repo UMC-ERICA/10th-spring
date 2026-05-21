@@ -1,6 +1,7 @@
 package umc.server.domain.store.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -8,11 +9,11 @@ import java.time.LocalDateTime;
 public class StoreReqDTO {
 
     public record CreateMissionDTO(
-            @NotNull(message = "미션 제목은 필수입니다.")
+            @NotBlank(message = "미션 제목은 필수입니다.")
             @Schema(description = "미션 제목", example = "매장에서 10,000원 이상 결제")
             String missionTitle,
 
-            @NotNull(message = "미션 설명은 필수입니다.")
+            @NotBlank(message = "미션 설명은 필수입니다.")
             @Schema(description = "미션 설명", example = "음식 메뉴 무관하게 매장에서 10,000원 이상 결제 시 포인트가 적립됩니다.")
             String missionDescription,
 
@@ -26,6 +27,6 @@ public class StoreReqDTO {
 
             @NotNull(message = "미션 활성여부는 필수입니다.")
             @Schema(description = "미션 활성여부", example = "true")
-            boolean isActive
+            Boolean isActive
     ) {}
 }
