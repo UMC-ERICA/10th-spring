@@ -1,7 +1,9 @@
 package umc.server.domain.mission.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import umc.server.domain.mission.dto.MissionReqDTO;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.enums.MissionStatus;
 import umc.server.domain.mission.exception.code.MissionSuccessCode;
@@ -18,9 +20,11 @@ public class MissionController {
     @GetMapping("/me")
     public ApiResponse<MissionResDTO.GetMissionListDTO> findMissionList(
             @RequestParam(name = "memberId") Long memberId,
-            @RequestParam(name = "status") MissionStatus status
+            @RequestParam(name = "status") MissionStatus status,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer size
     ) {
-        return ApiResponse.onSuccess(MissionSuccessCode.MISSION_FOUND, missionService.getMissionList(memberId, status));
+        return ApiResponse.onSuccess(MissionSuccessCode.MISSION_FOUND, missionService.getMissionList(memberId, status, page, size));
     }
 
     @PatchMapping("/{missionId}")

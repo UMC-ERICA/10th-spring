@@ -1,6 +1,5 @@
 package umc.server.domain.mission.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import umc.server.domain.mission.enums.MissionStatus;
 import umc.server.domain.store.enums.StoreCategory;
@@ -22,7 +21,13 @@ public class MissionResDTO {
 
     @Builder
     public record GetMissionListDTO(
-            List<MissionDTO> missionList
+            List<MissionDTO> missionList,
+
+            Integer pageSize,    // 한 페이지 크기
+            Integer totalPage,   // 전체 페이지 수
+            Long totalElements,  // 전체 데이터 개수
+            Boolean isFirst,     // 첫 번째 페이지 여부
+            Boolean isLast       // 마지막 페이지 여부
     ) {}
 
     @Builder

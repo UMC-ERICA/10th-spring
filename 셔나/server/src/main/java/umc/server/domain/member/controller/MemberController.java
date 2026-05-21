@@ -25,7 +25,7 @@ public class MemberController {
 
     @GetMapping("/{memberId}")
     public ApiResponse<MemberResDTO.GetProfileResultDTO> findProfile(
-            @PathVariable Long memberId
+            @PathVariable(name = "memberId") Long memberId
     ) {
         return ApiResponse.onSuccess(MemberSuccessCode.OK, memberService.getProfile(memberId));
     }
