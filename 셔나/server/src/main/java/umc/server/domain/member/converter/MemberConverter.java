@@ -10,8 +10,10 @@ import java.util.ArrayList;
 public class MemberConverter {
 
     // DTO -> Member entity
-    public static Member toMember(MemberReqDTO.JoinDTO request) {
+    public static Member toMember(MemberReqDTO.JoinDTO request, String encodedPassword) {
         return Member.builder()
+                .email(request.email())
+                .password(encodedPassword)
                 .username(request.username())
                 .gender(request.gender())
                 .birth(request.birth())
