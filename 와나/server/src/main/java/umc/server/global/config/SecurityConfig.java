@@ -39,6 +39,10 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(customEntryPoint())
+                        .accessDeniedHandler(customAccessDenied())
                 );
 
         return http.build();

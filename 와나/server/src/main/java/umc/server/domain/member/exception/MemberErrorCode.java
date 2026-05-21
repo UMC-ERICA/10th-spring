@@ -10,7 +10,7 @@ import umc.server.global.exception.code.BaseCode;
 public enum MemberErrorCode implements BaseCode {
 
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_4001", "회원을 찾을 수 없습니다."),
-
+    DUPLICATE_EMAIL(HttpStatus.CONFLICT, "MEMBER_4091", "이미 사용 중인 이메일입니다."),
 
     MEMBER_ADDR_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMADDR_4001", "회원의 주소를 찾을 수 없습니다.")
 
