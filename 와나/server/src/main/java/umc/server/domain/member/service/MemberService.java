@@ -1,6 +1,7 @@
 package umc.server.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.dto.request.SignupRequest;
@@ -16,6 +17,7 @@ import umc.server.domain.member.repository.MemberRepository;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     public Long signUp(SignupRequest request) {

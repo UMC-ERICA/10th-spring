@@ -37,5 +37,6 @@ public class Member extends BaseEntity {
     private LoginType socialType;
     private String refreshToken;
     private Long socialId;
+    private String password;
 
 }
