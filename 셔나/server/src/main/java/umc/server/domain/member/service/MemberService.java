@@ -1,6 +1,7 @@
 package umc.server.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.MemberReqDTO;
@@ -23,9 +24,19 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final FoodRepository foodRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public MemberResDTO.JoinResultDTO join(MemberReqDTO.JoinDTO request) {
-        Member member = MemberConverter.toMember(request);
+        // 아이디 중복 체크
+        if (memberRepository.existsByEmail(request.email())) {
+            throw new MemberException(MemberErrorCode.MEMBER_ALREADY_EXISTS);
+        }
+
+        // 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(request.password());
+
+        // Member 엔티티 생성
+        Member member = MemberConverter.toMember(request, encodedPassword);
 
         // 약관 동의 연관관계 설정
         TermsAgreed termsAgreed = MemberConverter.toTermsAgreed(request.terms());
