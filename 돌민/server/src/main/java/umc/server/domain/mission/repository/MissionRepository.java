@@ -8,7 +8,9 @@ import org.springframework.data.repository.query.Param;
 import umc.server.domain.member.dto.response.MissionHomeResponse;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.enums.MissionStatus;
+import umc.server.domain.store.dto.response.MissionResDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MissionRepository extends JpaRepository<Mission, Long> {
@@ -60,4 +62,16 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             @Param("status") MissionStatus status,
             Pageable pageable
     );
+
+    @Query("""
+            select new umc.server.domain.store.dto.response.MissionResDTO.GetMission(
+                m.id,
+                m.point,
+                m.missionContent
+            )
+            from Mission m
+            where m.store.id = :storeId
+            order by m.createdAt desc
+            """)
+    List<MissionResDTO.GetMission> findAllByStoreId(@Param("storeId") Long storeId);
 }

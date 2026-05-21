@@ -17,7 +17,6 @@ public class AlarmController {
     public ApiResponse<NewAlarmResponse> hasNewAlarm(
             @PathVariable Long memberId
     ) {
-        // TODO: alarmService.hasNewAlarm(memberId);
 
         NewAlarmResponse result = new NewAlarmResponse(
                 true,
