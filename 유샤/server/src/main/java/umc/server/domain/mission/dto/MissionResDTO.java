@@ -5,6 +5,7 @@ import lombok.Builder;
 
 import java.util.List;
 
+
 public class MissionResDTO {
 
     @Builder
@@ -27,5 +28,21 @@ public class MissionResDTO {
     @Builder
     public record Complete(
             Long missionId
+    ){}
+
+    // 워크북
+    @Builder
+    public record GetMission(
+            Long missionId,
+            Integer point,
+            String conditional
+    ){}
+
+    // 페이지네이션 틀
+    @Builder
+    public record Pagination<T>(
+            List<T> data,
+            Integer pageNumber,
+            Integer pageSize
     ){}
 }

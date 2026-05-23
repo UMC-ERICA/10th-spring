@@ -16,10 +16,14 @@ public class MissionController {
     public final MissionService missionService;
 
     @GetMapping
-    public ApiResponse<MissionResDTO.GetMissionList> getMissionList(
-            @RequestParam("isCompleted") Boolean isCompleted
+    public ApiResponse<MissionResDTO.Pagination<MissionResDTO.GetMission>> getMissionList(
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("isCompleted") Boolean isCompleted,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer pageNumber,
+            @RequestParam(required = false) String sort
     ){
-        MissionResDTO.GetMissionList result = missionService.getMissionList(isCompleted);
+        MissionResDTO.Pagination<MissionResDTO.GetMission> result = missionService.getMissionsPage(memberId, isCompleted, pageSize, pageNumber, sort);
         BaseSuccessCode code = MissionSuccessCode.OK;
 
         return ApiResponse.onSuccess(code,result);

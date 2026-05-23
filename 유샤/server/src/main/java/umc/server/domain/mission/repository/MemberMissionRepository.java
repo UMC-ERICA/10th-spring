@@ -1,5 +1,7 @@
 package umc.server.domain.mission.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -47,5 +49,15 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
     Integer findRegionMissionProgress(
             @Param("memberId") Long memberId,
             @Param("regionSub") String regionSub);
+
+    @Query("SELECT m FROM MemberMission mm " +
+            "JOIN mm.mission m " +
+            "WHERE mm.member.id = :memberId " +
+            "AND mm.isCompleted = :isCompleted ")
+    Page<Mission> findMissions(
+            @Param("memberId") Long memberId,
+            @Param("isCompleted") Boolean isCompleted,
+            Pageable pageable
+    );
 
 }
