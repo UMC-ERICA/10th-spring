@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import umc.server.domain.member.dto.MemberReqDTO;
 import umc.server.domain.member.dto.MemberResDTO;
 import umc.server.domain.member.exception.code.MemberSuccessCode;
+import umc.server.domain.member.service.MemberService;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.BaseSuccessCode;
 
@@ -17,12 +18,14 @@ import umc.server.global.apiPayload.code.BaseSuccessCode;
 @RequestMapping("/api/auth")
 public class AuthController {
 
+    private final MemberService memberService;
+
     @PostMapping("/sign-up")
     public ApiResponse<MemberResDTO.SignUp> postSignup(
             @RequestBody @Valid MemberReqDTO.SignUp dto
     ){
         BaseSuccessCode code = MemberSuccessCode.CREATED;
-        return ApiResponse.onSuccess(code,null); // service 개발 후 넣어야함.
+        return ApiResponse.onSuccess(code,memberService.signUp(dto));
     }
 
 }
