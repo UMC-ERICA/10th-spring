@@ -55,6 +55,9 @@ public class Member extends BaseEntity {
     @Builder.Default
     private Integer point = 0;
 
+    @Column(name="password",nullable = false)
+    private String password;
+
     @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
     @JoinColumn(name="address_id")
     private Address address;
