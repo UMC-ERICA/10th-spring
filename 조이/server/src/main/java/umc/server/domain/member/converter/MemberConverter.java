@@ -8,10 +8,11 @@ import umc.server.domain.member.entity.Member;
 @Builder
 public class MemberConverter {
     //dto->엔티티 (회원가입)
-    public static Member toMemberEntity(MemberReqDTO.JoinReqDTO request) {
+    public static Member toMemberEntity(MemberReqDTO.JoinReqDTO request, String encodedPassword) {
         return Member.builder()
-                .name(request.name())
+                .userName(request.userName())
                 .email(request.email())
+                .password(encodedPassword)
                 .gender(request.gender())
                 .tel(request.tel())
                 .address(request.address())
@@ -22,7 +23,7 @@ public class MemberConverter {
     public static MemberResDTO.JoinResDTO toMemberDTO(Member member) {
         return MemberResDTO.JoinResDTO.builder()
                 .memberId(member.getId())
-                .name(member.getName())
+                .userName(member.getUserName())
                 .build();
     }
 
@@ -30,7 +31,7 @@ public class MemberConverter {
     public static MemberResDTO.MyPageResDTO toMyPageDTO(Member member) {
         return MemberResDTO.MyPageResDTO.builder()
                 .memberId(member.getId())
-                .name(member.getName())
+                .userName(member.getUserName())
                 .email(member.getEmail())
                 .tel(member.getTel())
                 .totalPoint(member.getTotalPoint())

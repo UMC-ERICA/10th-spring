@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.MemberReqDTO;
 import umc.server.domain.member.dto.MemberResDTO;
@@ -21,11 +22,13 @@ import umc.server.domain.mission.repository.MissionRepository;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public MemberResDTO.JoinResDTO join(MemberReqDTO.JoinReqDTO dto) {
-        // 1. 회원 가입 로직 구현
-        Member member = MemberConverter.toMemberEntity(dto);
-        // 2. 회원 정보 저장 (음식 관계 설정 추후 구현 하겠습니다!!!)
+        // 1. 비밀번호 BCrypt 인코딩
+        String encodedPassword = passwordEncoder.encode(dto.password());
+        // 2. 회원 엔티티 생성 및 저장 (음식 관계 설정 추후 구현 하겠습니다!!!)
+        Member member = MemberConverter.toMemberEntity(dto, encodedPassword);
 
         return MemberConverter.toMemberDTO(memberRepository.save(member));
     }

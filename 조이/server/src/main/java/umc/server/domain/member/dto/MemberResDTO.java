@@ -11,14 +11,14 @@ public class MemberResDTO {
     @Builder
     public record JoinResDTO(
             Long memberId,
-            String name
+            String userName
     ) {
     }
 
     @Builder
     public record MyPageResDTO(
             Long memberId,
-            String name,
+            String userName,
             String email,
             String tel,
             Integer totalPoint

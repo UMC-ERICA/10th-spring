@@ -10,8 +10,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import java.security.Timestamp;
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +30,7 @@ import umc.server.global.entity.BaseEntity;
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "member")
 @Getter
 @Setter
@@ -37,9 +39,10 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String password;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "user_name", nullable = false)
+    private String userName;
 
     @Column(name = "birth")
     private String birth;
