@@ -1,10 +1,7 @@
 package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.server.domain.common.entity.Address;
 import umc.server.domain.common.entity.BaseEntity;
 import umc.server.domain.member.enums.Gender;
@@ -18,6 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name="member")
 public class Member extends BaseEntity {
 

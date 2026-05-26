@@ -12,6 +12,7 @@ import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.MemberRepository;
+import umc.server.global.security.entity.AuthMember;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +21,10 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public MemberResDTO.GetInfo getMe(){
-
-        Member memberMe = memberRepository.findById(1L).orElseThrow(); // 추후에 유저ID로 변
-
-        return MemberConverter.toGetInfoResult(memberMe);
+    public MemberResDTO.GetInfo getMe(
+            AuthMember member
+    ){
+        return MemberConverter.toGetInfoResult(member.getMember());
     };
 
     public MemberResDTO.GetAddress getAddress(){

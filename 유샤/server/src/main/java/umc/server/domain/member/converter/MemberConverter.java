@@ -4,6 +4,7 @@ import umc.server.domain.common.entity.Address;
 import umc.server.domain.member.dto.MemberReqDTO;
 import umc.server.domain.member.dto.MemberResDTO;
 import umc.server.domain.member.entity.Member;
+import umc.server.global.security.dto.OAuthDTO;
 
 import java.util.ArrayList;
 
@@ -43,9 +44,24 @@ public class MemberConverter {
                 .build();
     }
 
+    public static Member toMember(OAuthDTO dto){
+        return Member.builder()
+                .email(dto.getSocialEmail())
+                .name(dto.getName())
+                .provider(dto.getProvider())
+                .socialUid(dto.getSocialUid())
+                .build();
+    }
+
     public static MemberResDTO.SignUp toSignUpResultDTO(Member savedMember) {
         return MemberResDTO.SignUp.builder()
                 .id(savedMember.getId())
+                .build();
+    }
+
+    public static MemberResDTO.Login toLogin(String accessToken) {
+        return MemberResDTO.Login.builder()
+                .accessToken(accessToken)
                 .build();
     }
 }

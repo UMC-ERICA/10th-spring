@@ -23,4 +23,9 @@ public class MemberResDTO {
             Long addressId,
             String regionSub
     ){}
+
+    @Builder
+    public record Login(
+            String accessToken
+    ) {}
 }

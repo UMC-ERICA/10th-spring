@@ -1,12 +1,14 @@
 package umc.server.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.dto.MemberResDTO;
 import umc.server.domain.member.exception.code.MemberSuccessCode;
 import umc.server.domain.member.service.MemberService;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.BaseSuccessCode;
+import umc.server.global.security.entity.AuthMember;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +19,9 @@ public class MemberController {
 
     @GetMapping("/me")
     public ApiResponse<MemberResDTO.GetInfo> getInfo(
-            @RequestParam Long id
-    ){
-        MemberResDTO.GetInfo result = memberService.getMe();
+            @AuthenticationPrincipal AuthMember member
+            ){
+        MemberResDTO.GetInfo result = memberService.getMe(member);
         BaseSuccessCode code = MemberSuccessCode.OK;
 
         return ApiResponse.onSuccess(code,result); // service 생성 후 넣을 예정

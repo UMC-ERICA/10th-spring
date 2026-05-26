@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.enums.Provider;
 import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.MemberRepository;
@@ -23,6 +24,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     ) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(username)
                 .orElseThrow(()->new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        return new AuthMember(member);
+    }
+
+    public UserDetails loadUserByUserUidAndSocialType(
+            Provider socialType,
+            String username
+    ) throws UsernameNotFoundException {
+
+        Member member = memberRepository.findBySocialTypeAndSocialUid(socialType, username)
+                .orElseThrow(()->new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+
         return new AuthMember(member);
     }
 }
