@@ -2,6 +2,7 @@ package umc.server.domain.member.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.MemberReqDTO;
@@ -33,10 +34,10 @@ public class MemberController {
         return ApiResponse.onSuccess(MemberSuccessCode.OK, memberService.login(request));
     }
 
-    @GetMapping("/{memberId}")
+    @GetMapping("/me")
     public ApiResponse<MemberResDTO.GetProfileResultDTO> findProfile(
-            @PathVariable(name = "memberId") Long memberId
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        return ApiResponse.onSuccess(MemberSuccessCode.OK, memberService.getProfile(memberId));
+        return ApiResponse.onSuccess(MemberSuccessCode.OK, memberService.getProfile(userDetails.getMember().getId()));
     }
 }
