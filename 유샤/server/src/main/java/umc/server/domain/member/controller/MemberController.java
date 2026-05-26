@@ -24,7 +24,7 @@ public class MemberController {
         MemberResDTO.GetInfo result = memberService.getMe(member);
         BaseSuccessCode code = MemberSuccessCode.OK;
 
-        return ApiResponse.onSuccess(code,result); // service 생성 후 넣을 예정
+        return ApiResponse.onSuccess(code,result);
     }
 
     @GetMapping("/me/address")
