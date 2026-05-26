@@ -3,6 +3,7 @@ package umc.server.domain.mission.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
@@ -30,7 +31,7 @@ public class MissionService {
         Page<MemberMission> memberMissionPage = memberMissionRepository.findAllByMemberAndStatus(
                 member,
                 request.status(),
-                PageRequest.of(request.page(), request.pageSize())
+                PageRequest.of(request.page(), request.pageSize(), Sort.by(Sort.Direction.DESC, "createdAt"))
         );
 
         return MissionConverter.toMissionListDTO(memberMissionPage);

@@ -3,6 +3,7 @@ package umc.server.domain.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.converter.MemberConverter;
@@ -34,7 +35,7 @@ public class MemberService {
                 .orElseThrow(() -> new GeneralException(GeneralErrorCode.MEMBER_NOT_FOUND));
 
         Region region = member.getAddress().getRegion();
-        Page<Mission> missionPage = missionRepository.findAllByStoreAddressRegion(region, PageRequest.of(page, 10));
+        Page<Mission> missionPage = missionRepository.findAllByStoreAddressRegion(region, PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createdAt")));
 
         Integer missionProgress = getMissionProgress(member);
 
@@ -51,7 +52,7 @@ public class MemberService {
                 .orElseThrow(() -> new GeneralException(GeneralErrorCode.MEMBER_NOT_FOUND));
 
         Region region = member.getAddress().getRegion();
-        return missionRepository.findAllByStoreAddressRegion(region, PageRequest.of(page, 10));
+        return missionRepository.findAllByStoreAddressRegion(region, PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
     public Integer getMissionProgress(Member member) {
