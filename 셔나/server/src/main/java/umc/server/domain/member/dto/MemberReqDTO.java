@@ -2,10 +2,7 @@ package umc.server.domain.member.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 import umc.server.domain.member.enums.Gender;
 
 import java.time.LocalDate;
@@ -16,6 +13,16 @@ public class MemberReqDTO {
     public record JoinDTO(
             @Valid
             TermsDTO terms,
+
+            @NotBlank(message = "이메일은 필수입니다.")
+            @Email(message = "올바른 이메일 형식이어야 합니다.")
+            @Schema(description = "이메일", example = "test@example.com")
+            String email, // 추가
+
+            @NotBlank(message = "비밀번호는 필수입니다.")
+            @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
+            @Schema(description = "비밀번호", example = "password123!")
+            String password,
 
             @NotBlank(message = "사용자 이름은 필수입니다.")
             @Schema(description = "사용자 이름", example = "홍길동")
