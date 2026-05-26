@@ -6,11 +6,10 @@ import org.springframework.stereotype.Service;
 import umc.server.domain.store.dto.StoreReqDTO;
 import umc.server.domain.store.dto.StoreResDTO;
 import umc.server.domain.store.entitty.Store;
+import umc.server.domain.store.enums.StoreCategory;
 import umc.server.domain.store.repository.StoreRepository;
 import umc.server.global.apiPayload.code.GeneralErrorCode;
 import umc.server.global.apiPayload.exception.ProjectException;
-
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +20,7 @@ public class StoreService {
     public StoreResDTO.StoreInfo createStore(StoreReqDTO.JoinStore dto) {
         Store store = Store.builder()
                 .name(dto.name())
-                .category(Locale.Category.valueOf(dto.category()))
+                .category(StoreCategory.valueOf(dto.category()))
                 .build();
         Store saved = storeRepository.save(store);
 

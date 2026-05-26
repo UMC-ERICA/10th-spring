@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -42,7 +43,11 @@ public class SecurityConfig {
 
             //로그인
             "/auth/**",
-            "/members"
+            "/members",
+
+            "/oauth/authorize/**",   // 카카오 로그인 시작
+            "/oauth/callback/**",
+            "/login/oauth2/code/**"
 
     };
 
@@ -59,8 +64,9 @@ public class SecurityConfig {
                 )
                 .formLogin(AbstractHttpConfigurer::disable
                 )
-                .sessionManagement(AbstractHttpConfigurer::disable)
-                //JWT 필터
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                )//JWT 필터
                 .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -71,7 +77,8 @@ public class SecurityConfig {
                 //OAuth
                 .oauth2Login(oauth -> oauth
                         //인증 엔트리 포인트
-                        .authorizationEndpoint(auth -> auth
+                        .authorizationEndpoint
+                                (auth -> auth
                                 .baseUri("/oauth/authorize")
                         )
                         //콜백 주소
@@ -86,8 +93,8 @@ public class SecurityConfig {
                         .successHandler(oAuthSuccessHandler())
                 )
                 .exceptionHandling(exception -> exception
-                        .accessDeniedHandler(customAccessDenied())
-                        .authenticationEntryPoint(customEntryPoint())
+                        .accessDeniedHandler(customAccessDenied)
+                        .authenticationEntryPoint(customEntryPoint)
                 );
         return http.build();
     }
