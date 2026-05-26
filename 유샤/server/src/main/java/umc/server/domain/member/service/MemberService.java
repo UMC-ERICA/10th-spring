@@ -56,4 +56,19 @@ public class MemberService {
 
         return MemberConverter.toSignUpResultDTO(savedMember,accessToken);
     }
+
+    public MemberResDTO.Login login(MemberReqDTO.Login dto) {
+        Member member = memberRepository.findByEmail(dto.email())
+                .orElseThrow(()-> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        if(!passwordEncoder.matches(dto.password(), member.getPassword())) {
+            throw new MemberException(MemberErrorCode.INVALID_PASSWORD);
+        }
+
+        AuthMember authMember = new AuthMember(member);
+        String accessToken = jwtUtil.createAccessToken(authMember);
+
+        return MemberResDTO.Login.builder()
+                .accessToken(accessToken)
+                .build();
+    }
 }

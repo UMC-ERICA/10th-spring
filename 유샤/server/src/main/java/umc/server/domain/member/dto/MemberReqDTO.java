@@ -47,4 +47,12 @@ public class MemberReqDTO {
     public record GetAddress(
             Long id
     ){}
+
+    public record Login(
+            @Email
+            @NotBlank(message = "email을 입력하세요.")
+            String email,
+            @NotBlank(message = "password를 입력하세요.")
+            String password
+    ){}
 }
