@@ -6,8 +6,6 @@ import umc.server.domain.mission.enums.MissionStatus;
 
 public class MissionRequestDTO {
     public record MissionListRequestDTO(
-            @NotNull(message = "사용자 ID는 필수입니다.")
-            Long memberId,
             @NotNull(message = "미션 상태는 필수입니다.")
             MissionStatus status,
             @NotNull(message = "페이지 번호는 필수입니다.")
