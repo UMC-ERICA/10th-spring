@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.enums.MemberErrorCode;
 import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.mission.entity.Mission;
+import umc.server.domain.mission.enums.MissionErrorCode;
 import umc.server.domain.mission.exception.MissionException;
 import umc.server.domain.mission.repository.MissionRepository;
 import umc.server.domain.review.dto.request.ReviewCreateRequest;
@@ -24,9 +26,9 @@ public class ReviewService {
     @Transactional
     public void createReview(Long missionId, Long memberId, ReviewCreateRequest request) {
         Mission mission = missionRepository.findActiveById(missionId)
-                .orElseThrow(() -> new MissionException("Mission not found: " + missionId));
+                .orElseThrow(() -> new MissionException(MissionErrorCode.NOT_FOUND));
         Member member = memberRepository.findActiveById(memberId)
-                .orElseThrow(() -> new MemberException("Member not found: " + memberId));
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
         Review review = Review.builder()
                 .star(request.star())

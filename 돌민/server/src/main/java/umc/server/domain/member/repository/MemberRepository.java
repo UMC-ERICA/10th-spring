@@ -16,4 +16,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
               and m.deletedAt is null
             """)
     Optional<Member> findActiveById(@Param("memberId") Long memberId);
+
+    Optional<Member> findByEmail(String email);
 }
