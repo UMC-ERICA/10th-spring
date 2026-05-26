@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import umc.server.domain.review.enums.ReviewSortType;
 
 public class ReviewRequestDTO {
     public record CreateReviewDTO(
@@ -24,7 +25,7 @@ public class ReviewRequestDTO {
             @Min(value = 1, message = "페이지 크기는 1 이상이어야 합니다.")
             Integer pageSize,
             @NotNull(message = "정렬 타입은 필수입니다.")
-            String sortType // "ID" or "RATING"
+            ReviewSortType sortType // ID or RATING
     ) {
     }
 }
