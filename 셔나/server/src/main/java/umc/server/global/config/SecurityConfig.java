@@ -9,13 +9,20 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import umc.server.global.security.CustomAccessDenied;
 import umc.server.global.security.CustomEntryPoint;
+import umc.server.global.security.filter.JwtTokenFilter;
+import umc.server.global.security.service.CustomUserDetailsService;
+import umc.server.global.security.util.JwtUtil;
 
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService customUserDetailsService;
 
     private final String[] allowUris = {
             // Swagger
@@ -23,8 +30,9 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "/v3/api-docs/**",
 
-            // 회원가입
-            "/api/v1/members/signup"
+            // 회원가입 및 로그인
+            "/api/v1/members/signup",
+            "/api/v1/members/login"
     };
 
     @Bean
@@ -35,10 +43,9 @@ public class SecurityConfig {
                         .requestMatchers(allowUris).permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .defaultSuccessUrl("/swagger-ui/index.html", true)
-                        .permitAll()
-                )
+                .formLogin(AbstractHttpConfigurer::disable)
+                .sessionManagement(AbstractHttpConfigurer::disable)
+                .addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
@@ -65,5 +72,10 @@ public class SecurityConfig {
     @Bean
     public CustomEntryPoint customEntryPoint() {
         return new CustomEntryPoint();
+    }
+
+    @Bean
+    public JwtTokenFilter jwtTokenFilter() {
+        return new JwtTokenFilter(jwtUtil, customUserDetailsService);
     }
 }

@@ -15,6 +15,8 @@ import umc.server.domain.member.exception.code.FoodErrorCode;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.FoodRepository;
 import umc.server.domain.member.repository.MemberRepository;
+import umc.server.global.security.entity.CustomUserDetails;
+import umc.server.global.security.util.JwtUtil;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final FoodRepository foodRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     public MemberResDTO.JoinResultDTO join(MemberReqDTO.JoinDTO request) {
         // 아이디 중복 체크
@@ -59,6 +62,20 @@ public class MemberService {
         Member savedMember = memberRepository.save(member);
 
         return MemberConverter.toJoinResultDTO(savedMember);
+    }
+
+    public MemberResDTO.LoginResultDTO login(MemberReqDTO.LoginDTO request) {
+        Member member = memberRepository.findByEmail(request.email())
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+        if (!passwordEncoder.matches(request.password(), member.getPassword())) {
+            throw new MemberException(MemberErrorCode.INVALID_PASSWORD);
+        }
+
+        CustomUserDetails userDetails = new CustomUserDetails(member);
+        String accessToken = jwtUtil.createAccessToken(userDetails);
+
+        return MemberConverter.toLoginResultDTO(member, accessToken);
     }
 
     public MemberResDTO.GetProfileResultDTO getProfile(Long memberId) {

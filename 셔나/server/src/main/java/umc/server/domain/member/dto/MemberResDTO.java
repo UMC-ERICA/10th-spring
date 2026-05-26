@@ -13,6 +13,12 @@ public class MemberResDTO {
     ) {}
 
     @Builder
+    public record LoginResultDTO(
+            Long memberId,
+            String accessToken
+    ) {}
+
+    @Builder
     public record GetProfileResultDTO(
             String nickname,
             String email,

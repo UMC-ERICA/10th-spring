@@ -43,6 +43,14 @@ public class MemberConverter {
                 .build();
     }
 
+    // entity -> 로그인 DTO
+    public static MemberResDTO.LoginResultDTO toLoginResultDTO(Member member, String accessToken) {
+        return MemberResDTO.LoginResultDTO.builder()
+                .memberId(member.getId())
+                .accessToken(accessToken)
+                .build();
+    }
+
     // entity -> 회원 프로필 조회 DTO
     public static MemberResDTO.GetProfileResultDTO toGetProfileResultDTO(Member member) {
         return MemberResDTO.GetProfileResultDTO.builder()
