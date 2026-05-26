@@ -14,6 +14,7 @@ import umc.server.domain.member.dto.response.MemberPointResponse;
 import umc.server.domain.member.dto.response.MissionHomeResponse;
 import umc.server.domain.member.dto.response.MyPageResponse;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.enums.MemberErrorCode;
 import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.repository.MemberAddressRepository;
 import umc.server.domain.member.repository.MemberRepository;
@@ -46,7 +47,7 @@ public class MemberService {
         return memberAddressRepository.findLocationsByMemberId(memberId, PageRequest.of(0, 1))
                 .stream()
                 .findFirst()
-                .orElseThrow(() -> new MemberException("Member address not found: " + memberId));
+                .orElseThrow(() -> new MemberException(MemberErrorCode.ADDRESS_NOT_FOUND));
     }
 
     public MemberPointResponse getMemberPoint(Long memberId) {
@@ -115,8 +116,11 @@ public class MemberService {
         );
     }
 
+    /**
+     * 회원 ID로 활성 회원을 조회
+     */
     private Member validateMember(Long memberId) {
         return memberRepository.findActiveById(memberId)
-                .orElseThrow(() -> new MemberException("Member not found: " + memberId));
+                .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
     }
 }
