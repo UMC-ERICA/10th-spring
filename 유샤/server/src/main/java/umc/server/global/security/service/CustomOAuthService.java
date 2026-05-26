@@ -55,7 +55,7 @@ public class CustomOAuthService extends DefaultOAuth2UserService {
         }
 
         // DB 저장: 있다면 그 데이터 가져오고 없으면 새로 저장
-        Member member = memberRepository.findBySocialTypeAndSocialUid(providerId, socialUid)
+        Member member = memberRepository.findByProviderAndSocialUid(providerId, socialUid)
                 .orElseGet(() -> {
                     Member newMember = MemberConverter.toMember(dto);
                     memberRepository.save(newMember);

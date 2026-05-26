@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import umc.server.global.security.exception.CustomAccessDenied;
 import umc.server.global.security.exception.CustomEntryPoint;
 import umc.server.global.security.filter.JwtAuthFilter;
@@ -49,6 +50,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .sessionManagement(AbstractHttpConfigurer::disable)
+                .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")

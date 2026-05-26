@@ -15,7 +15,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Table(name="member")
 public class Member extends BaseEntity {
 
@@ -23,20 +22,20 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name",nullable = false)
+    @Column(name="name")
     private String name;
 
-    @Column(name="gender",nullable = false)
+    @Column(name="gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name="birth",nullable = false)
+    @Column(name="birth")
     private LocalDate birth;
 
     @Column(name="social_uid",nullable = false)
     private String socialUid;
 
-    @Column(name="social_provider",nullable = false)
+    @Column(name="provider",nullable = false)
     @Enumerated(EnumType.STRING)
     private Provider provider;
 

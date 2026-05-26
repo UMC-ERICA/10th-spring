@@ -1,5 +1,6 @@
 package umc.server.domain.member.enums;
 
 public enum Provider {
+    LOCAL,
     KAKAO
 }

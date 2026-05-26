@@ -60,7 +60,7 @@ public class JwtUtil {
 
     public Provider getProvider(String token) {
         try {
-            return Provider.valueOf(getClaims(token).getPayload().get("social_type").toString().toUpperCase());
+            return Provider.valueOf(getClaims(token).getPayload().get("provider").toString().toUpperCase());
         } catch (JwtException e) {
             return null;
         }
@@ -90,9 +90,9 @@ public class JwtUtil {
                 .collect(Collectors.joining(","));
 
         return Jwts.builder()
-                .subject(member.getUsername()) // User 이메일을 Subject로
+                .subject(member.getMember().getSocialUid()) // Uid
                 .claim("role", authorities)
-                .claim("social_type", member.getMember().getSocialUid())
+                .claim("provider", member.getMember().getProvider())
                 .issuedAt(Date.from(now)) // 언제 발급한지
                 .expiration(Date.from(now.plus(expiration))) // 언제까지 유효한지
                 .signWith(secretKey) // sign할 Key

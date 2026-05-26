@@ -13,6 +13,7 @@ import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.exception.code.MemberErrorCode;
 import umc.server.domain.member.repository.MemberRepository;
 import umc.server.global.security.entity.AuthMember;
+import umc.server.global.security.util.JwtUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     public MemberResDTO.GetInfo getMe(
             AuthMember member
@@ -48,6 +50,10 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
 
-        return MemberConverter.toSignUpResultDTO(savedMember);
+        // JWT
+        AuthMember authMember = new AuthMember(savedMember);
+        String accessToken = jwtUtil.createAccessToken(authMember);
+
+        return MemberConverter.toSignUpResultDTO(savedMember,accessToken);
     }
 }

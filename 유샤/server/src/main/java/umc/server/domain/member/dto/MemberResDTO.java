@@ -15,7 +15,8 @@ public class MemberResDTO {
 
     @Builder
     public record SignUp(
-            Long id
+            Long id,
+            String accessToken
     ){}
 
     @Builder

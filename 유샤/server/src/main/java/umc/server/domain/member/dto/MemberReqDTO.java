@@ -32,7 +32,7 @@ public class MemberReqDTO {
             @NotNull(message = "생년월일은 필수입니다.")
             LocalDate birth,
 
-            Address address,
+            // Address address,
 
             @NotBlank(message="email은 필수입니다.")
             @Email

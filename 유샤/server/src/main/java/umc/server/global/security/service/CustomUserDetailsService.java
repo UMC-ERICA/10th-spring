@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             String username
     ) throws UsernameNotFoundException {
 
-        Member member = memberRepository.findBySocialTypeAndSocialUid(socialType, username)
+        Member member = memberRepository.findByProviderAndSocialUid(socialType, username)
                 .orElseThrow(()->new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
         return new AuthMember(member);
