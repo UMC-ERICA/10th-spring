@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.server.domain.store.enums.StoreCategory;
 
 import java.util.Locale;
 
@@ -28,5 +29,5 @@ public class Store {
 
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Locale.Category category;
+    private StoreCategory category;
 }
