@@ -1,7 +1,7 @@
 package umc.server.domain.mission.enums;
 
 public enum Address {
-
+        NONE,
         // 서울 25개 구
         SEOUL_JONGNO,       // 종로구
         SEOUL_JUNG,         // 중구
@@ -62,4 +62,4 @@ public enum Address {
         GYEONGGI_YEONCHEON,   // 연천군
         GYEONGGI_GWACHEON,    // 과천시
     }
-}
+

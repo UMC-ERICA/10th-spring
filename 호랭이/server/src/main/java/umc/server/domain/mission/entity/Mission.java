@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.server.domain.mission.enums.MissionStatus;
+import umc.server.domain.store.entitty.Store;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +40,18 @@ public class  Mission {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "d_day")
+    private LocalDate dDay;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private MissionStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
 
 
 }

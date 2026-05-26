@@ -1,6 +1,7 @@
 package umc.server.domain.mission.dto;
 
 import jakarta.validation.constraints.NotNull;
+import umc.server.domain.mission.enums.MissionStatus;
 
 import java.time.LocalDate;
 
@@ -15,6 +16,6 @@ public class MissionReqDTO {
             String conditional
     ){}
     public record GetMission(
-            Long memberId
+            MissionStatus status
     ) {}
 }
