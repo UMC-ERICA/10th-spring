@@ -2,10 +2,6 @@ package umc.server.domain.mission.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,7 +17,7 @@ import umc.server.domain.mission.service.MissionQueryService;
 import umc.server.domain.mission.service.MissionService;
 import umc.server.global.exception.apiPayload.ApiResponse;
 import umc.server.global.exception.code.CommonSuccessCode;
-import umc.server.global.paging.CursorPageResponse;
+import umc.server.global.paging.OffsetPageResponse;
 
 @Slf4j
 @Validated
@@ -43,14 +39,14 @@ public class MissionController {
 
     // 홈화면 - 내 미션 조회 API
     @GetMapping("/missions/my")
-    public ApiResponse<CursorPageResponse<GetMissionsResponse>> getMyMission(
+    public ApiResponse<OffsetPageResponse<GetMissionsResponse>> getMyMission(
             @RequestParam MemberMissionStatus memberMissionStatus,
-            Long cursorId
-            ) {
-
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
         // 추후 Security를 통해 자신의 memberId를 가져옴. 지금은 임시로 1L 사용
         Long memberId = 1L;
-        return ApiResponse.success(CommonSuccessCode.OK, missionQueryService.getMyMissions(memberId, memberMissionStatus, cursorId));
+        return ApiResponse.success(CommonSuccessCode.OK, missionQueryService.getMyMissions(memberId, memberMissionStatus, page, size));
     }
 
     // 홈화면 - 완료 미션 개수

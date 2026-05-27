@@ -3,6 +3,9 @@ package umc.server.domain.member.exception;
 import lombok.Getter;
 import umc.server.global.apiPayload.code.BaseErrorCode;
 
+/*
+sotreException이랑 형식 통일했음
+ */
 @Getter
 public class MemberException extends RuntimeException {
 
@@ -12,4 +15,5 @@ public class MemberException extends RuntimeException {
         super(code.getMessage());
         this.code = code;
     }
+
 }

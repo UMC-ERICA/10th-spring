@@ -156,8 +156,11 @@ public class MemberService {
         );
     }
 
+    /**
+     * 회원 ID로 활성 회원을 조회
+     */
     private Member validateMember(Long memberId) {
         return memberRepository.findActiveById(memberId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
     }
 }

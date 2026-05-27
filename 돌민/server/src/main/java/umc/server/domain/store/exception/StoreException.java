@@ -12,4 +12,5 @@ public class StoreException extends RuntimeException {
         super(code.getMessage());
         this.code = code;
     }
+
 }

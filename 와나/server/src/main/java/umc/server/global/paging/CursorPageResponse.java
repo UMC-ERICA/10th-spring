@@ -4,7 +4,7 @@ import java.util.List;
 
 public record CursorPageResponse<T>(
         List<T> contents,
-        Long nextCursor,
+        String nextCursor,
         boolean hasNext
 ) {
 }

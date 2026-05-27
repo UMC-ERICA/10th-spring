@@ -12,4 +12,5 @@ public class MissionException extends RuntimeException {
         super(code.getMessage());
         this.code = code;
     }
+
 }

@@ -12,4 +12,5 @@ public class ReviewException extends RuntimeException {
         super(code.getMessage());
         this.code = code;
     }
+
 }
