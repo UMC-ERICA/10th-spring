@@ -1,5 +1,6 @@
 package umc.server.global.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,12 +9,20 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import umc.server.global.security.exception.CustomAccessDenied;
 import umc.server.global.security.exception.CustomEntryPoint;
+import umc.server.global.security.filter.JwtAuthFilter;
+import umc.server.global.security.service.CustomUserDetailsService;
+import umc.server.global.security.util.JwtUtil;
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService customUserDetailsService;
 
     private final String[] allowUris = {
             // Swagger 허용
@@ -31,10 +40,9 @@ public class SecurityConfig {
                         .requestMatchers(allowUris).permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .defaultSuccessUrl("/swagger-ui/index.html", true)
-                        .permitAll()
-                )
+                .formLogin(AbstractHttpConfigurer::disable) // 사용 X
+                .sessionManagement(AbstractHttpConfigurer::disable) // 세션 사용 X
+                .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class) // JWT 필터 추가
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
@@ -61,5 +69,10 @@ public class SecurityConfig {
     @Bean
     public CustomEntryPoint customEntryPoint() {
         return new CustomEntryPoint();
+    }
+
+    @Bean
+    public JwtAuthFilter jwtAuthFilter() {
+        return new JwtAuthFilter(jwtUtil, customUserDetailsService);
     }
 }

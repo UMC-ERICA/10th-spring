@@ -17,3 +17,10 @@ spring:
     properties:
       hibernate:
         format_sql: true # 출력되는 SQL 쿼리를 보기 좋게 포맷팅
+
+
+jwt:
+  token:
+    secretKey: ${JWT_SECRET_KEY} # JWT 토큰 서명에 사용할 비밀 키
+    expiration:
+      access: 1800000
