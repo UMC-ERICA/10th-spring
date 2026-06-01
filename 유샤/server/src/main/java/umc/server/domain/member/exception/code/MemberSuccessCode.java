@@ -19,7 +19,7 @@ public enum MemberSuccessCode implements BaseSuccessCode {
                 "MEMBER200_2",
                 "성공적으로 유저의 위치를 조회했습니다."),
         LOGIN_OK(HttpStatus.OK,
-                "MEMBER200_2",
+                "MEMBER200_3",
                 "성공적으로 로그인했습니다.");
 
         private final HttpStatus httpStatus;

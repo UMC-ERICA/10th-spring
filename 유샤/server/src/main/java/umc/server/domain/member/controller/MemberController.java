@@ -29,9 +29,9 @@ public class MemberController {
 
     @GetMapping("/me/address")
     public ApiResponse<MemberResDTO.GetAddress> getAddress(
-            @RequestParam Long id
+            @AuthenticationPrincipal AuthMember member
     ){
-        MemberResDTO.GetAddress result = memberService.getAddress();
+        MemberResDTO.GetAddress result = memberService.getAddress(member);
         BaseSuccessCode code = MemberSuccessCode.ADDRESS_FOUND;
         return ApiResponse.onSuccess(code,result);
     }

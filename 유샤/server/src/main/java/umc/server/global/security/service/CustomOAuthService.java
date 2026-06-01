@@ -18,13 +18,17 @@ import umc.server.global.security.entity.OAuthMember;
 
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CustomOAuthService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
 
     @Override
+    @Transactional
     public OAuth2User loadUser(
             OAuth2UserRequest userRequest
     ) throws OAuth2AuthenticationException {
@@ -56,11 +60,7 @@ public class CustomOAuthService extends DefaultOAuth2UserService {
 
         // DB 저장: 있다면 그 데이터 가져오고 없으면 새로 저장
         Member member = memberRepository.findByProviderAndSocialUid(providerId, socialUid)
-                .orElseGet(() -> {
-                    Member newMember = MemberConverter.toMember(dto);
-                    memberRepository.save(newMember);
-                    return newMember;
-                });
+                .orElseGet(() -> memberRepository.save(MemberConverter.toMember(dto)));
         return new OAuthMember(member, oAuthMember.getAttributes());
     }
 }

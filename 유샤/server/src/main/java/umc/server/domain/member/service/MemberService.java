@@ -29,9 +29,10 @@ public class MemberService {
         return MemberConverter.toGetInfoResult(member.getMember());
     };
 
-    public MemberResDTO.GetAddress getAddress(){
-
-        Member member = memberRepository.findById(1L).orElseThrow();
+    public MemberResDTO.GetAddress getAddress(
+            AuthMember authMember
+    ){
+        Member member = authMember.getMember();
 
         Address address = member.getAddress();
 
