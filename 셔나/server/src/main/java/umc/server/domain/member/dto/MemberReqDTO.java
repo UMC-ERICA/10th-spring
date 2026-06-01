@@ -17,7 +17,7 @@ public class MemberReqDTO {
             @NotBlank(message = "이메일은 필수입니다.")
             @Email(message = "올바른 이메일 형식이어야 합니다.")
             @Schema(description = "이메일", example = "test@example.com")
-            String email, // 추가
+            String email,
 
             @NotBlank(message = "비밀번호는 필수입니다.")
             @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
@@ -73,5 +73,17 @@ public class MemberReqDTO {
             @NotNull(message = "마케팅 수신 동의 여부를 선택해주세요.")
             @Schema(description = "마케팅 수신 동의 여부")
             Boolean marketingTerms
+    ) {}
+
+    public record LoginDTO(
+            @NotBlank(message = "이메일은 필수입니다.")
+            @Email(message = "올바른 이메일 형식이어야 합니다.")
+            @Schema(description = "이메일", example = "test@example.com")
+            String email,
+
+            @NotBlank(message = "비밀번호는 필수입니다.")
+            @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
+            @Schema(description = "비밀번호", example = "password123!")
+            String password
     ) {}
 }
