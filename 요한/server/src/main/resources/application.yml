@@ -22,3 +22,9 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
+
+jwt:
+  token:
+    secretKey: ${JWT_SECRET_KEY}
+    expiration:
+      access: 1800000 # 30분

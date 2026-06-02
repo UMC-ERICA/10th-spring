@@ -24,8 +24,8 @@ public class MissionService {
     private final MemberMissionRepository memberMissionRepository;
     private final MemberRepository memberRepository;
 
-    public MissionResponseDTO.MissionListDTO getMissionList(MissionRequestDTO.MissionListRequestDTO request) {
-        Member member = memberRepository.findById(request.memberId())
+    public MissionResponseDTO.MissionListDTO getMissionList(Long memberId, MissionRequestDTO.MissionListRequestDTO request) {
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new GeneralException(GeneralErrorCode.MEMBER_NOT_FOUND));
 
         Page<MemberMission> memberMissionPage = memberMissionRepository.findAllByMemberAndStatus(

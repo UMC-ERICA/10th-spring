@@ -14,6 +14,7 @@ import umc.server.domain.review.converter.ReviewConverter;
 import umc.server.domain.review.dto.ReviewRequestDTO;
 import umc.server.domain.review.dto.ReviewResponseDTO;
 import umc.server.domain.review.entity.Review;
+import umc.server.domain.review.enums.ReviewSortType;
 import umc.server.domain.review.repository.ReviewRepository;
 import umc.server.global.apiPayload.code.GeneralErrorCode;
 import umc.server.global.apiPayload.exception.GeneralException;
@@ -28,9 +29,14 @@ public class ReviewService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Review createReview(Long memberMissionId, ReviewRequestDTO.CreateReviewDTO request) {
+    public Review createReview(Long memberId, Long memberMissionId, ReviewRequestDTO.CreateReviewDTO request) {
         MemberMission memberMission = memberMissionRepository.findById(memberMissionId)
                 .orElseThrow(() -> new GeneralException(GeneralErrorCode.MEMBER_MISSION_NOT_FOUND));
+
+        // 미션 소유자 확인
+        if (!memberMission.getMember().getId().equals(memberId)) {
+            throw new GeneralException(GeneralErrorCode.FORBIDDEN);
+        }
 
         // 미션 상태가 COMPLETE인지 확인
         if (!memberMission.getStatus().equals(MissionStatus.COMPLETE)) {
@@ -41,8 +47,8 @@ public class ReviewService {
         return reviewRepository.save(newReview);
     }
 
-    public ReviewResponseDTO.ReviewListDTO getReviewList(ReviewRequestDTO.ReviewListRequestDTO request) {
-        Member member = memberRepository.findById(request.memberId())
+    public ReviewResponseDTO.ReviewListDTO getReviewList(Long memberId, ReviewRequestDTO.ReviewListRequestDTO request) {
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new GeneralException(GeneralErrorCode.MEMBER_NOT_FOUND));
 
         PageRequest pageRequest = PageRequest.of(0, request.pageSize());
@@ -51,7 +57,7 @@ public class ReviewService {
         String nextCursor = null;
         if (reviewSlice.hasNext()) {
             Review last = reviewSlice.getContent().get(reviewSlice.getNumberOfElements() - 1);
-            nextCursor = request.sortType().equalsIgnoreCase("ID") ?
+            nextCursor = request.sortType() == ReviewSortType.ID ?
                     "ID:" + last.getId() : "RATING:" + last.getRating() + ":ID:" + last.getId();
         }
 
@@ -59,12 +65,12 @@ public class ReviewService {
     }
 
     private Slice<Review> fetchReviewSlice(Member member, ReviewRequestDTO.ReviewListRequestDTO request, PageRequest pageRequest) {
-        if (request.sortType().equalsIgnoreCase("ID")) {
+        if (request.sortType() == ReviewSortType.ID) {
             if (request.cursor() == null) return reviewRepository.findAllByMemberOrderByIdDesc(member, pageRequest);
             return reviewRepository.findAllByMemberAndIdLessThanOrderByIdDesc(member, Long.parseLong(request.cursor().split(":")[1]), pageRequest);
         }
 
-        if (request.sortType().equalsIgnoreCase("RATING")) {
+        if (request.sortType() == ReviewSortType.RATING) {
             if (request.cursor() == null)
                 return reviewRepository.findAllByMemberOrderByRatingDescIdDesc(member, pageRequest);
             String[] parts = request.cursor().split(":");

@@ -9,6 +9,12 @@ public class MemberResponseDTO {
     ) {
     }
 
+    public record LoginResultDTO(
+            String accessToken,
+            LocalDateTime issuedAt
+    ) {
+    }
+
     public record MyPageDTO(
             String username,
             String email,
