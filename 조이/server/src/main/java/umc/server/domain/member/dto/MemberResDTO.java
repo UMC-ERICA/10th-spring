@@ -25,4 +25,10 @@ public class MemberResDTO {
     ) {
     }
 
+    @Builder
+    public record LoginResDTO(
+            String accessToken
+    ) {
+    }
+
 }
