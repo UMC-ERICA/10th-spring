@@ -32,7 +32,7 @@ public class MemberReqDTO {
             @NotNull(message = "생년월일은 필수입니다.")
             LocalDate birth,
 
-            Address address,
+            // Address address,
 
             @NotBlank(message="email은 필수입니다.")
             @Email
@@ -46,5 +46,13 @@ public class MemberReqDTO {
 
     public record GetAddress(
             Long id
+    ){}
+
+    public record Login(
+            @Email
+            @NotBlank(message = "email을 입력하세요.")
+            String email,
+            @NotBlank(message = "password를 입력하세요.")
+            String password
     ){}
 }

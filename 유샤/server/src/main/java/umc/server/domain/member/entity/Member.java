@@ -1,10 +1,7 @@
 package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.server.domain.common.entity.Address;
 import umc.server.domain.common.entity.BaseEntity;
 import umc.server.domain.member.enums.Gender;
@@ -25,20 +22,20 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name",nullable = false)
+    @Column(name="name")
     private String name;
 
-    @Column(name="gender",nullable = false)
+    @Column(name="gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name="birth",nullable = false)
+    @Column(name="birth")
     private LocalDate birth;
 
     @Column(name="social_uid",nullable = false)
     private String socialUid;
 
-    @Column(name="social_provider",nullable = false)
+    @Column(name="provider",nullable = false)
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
