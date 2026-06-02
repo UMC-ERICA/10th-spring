@@ -15,14 +15,17 @@ public class MemberReqDTO {
     public record JoinReqDTO(
 
             @NotBlank(message = "이름은 빈칸일 수 없습니다.")
-            String name,
+            String userName,
             Gender gender,
+            @NotBlank
+            String password,
 
-            @Email
+            @Email @NotBlank
             String email,
             @NotBlank(message = "전화번호는 빈칸일 수 없습니다.")
             String tel,
             String address
     ) {
     }
+
 }
