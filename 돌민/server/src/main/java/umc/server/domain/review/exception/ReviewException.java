@@ -1,10 +1,9 @@
 package umc.server.domain.review.exception;
 
+import lombok.Getter;
 import umc.server.global.apiPayload.code.BaseErrorCode;
 
-/**
- * 리뷰 도메인 전용 예외 클래스
- */
+@Getter
 public class ReviewException extends RuntimeException {
 
     private final BaseErrorCode code;
@@ -14,7 +13,4 @@ public class ReviewException extends RuntimeException {
         this.code = code;
     }
 
-    public BaseErrorCode getCode() {
-        return code;
-    }
 }

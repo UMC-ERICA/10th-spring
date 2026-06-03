@@ -23,7 +23,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
      * [ID 정렬] 내가 작성한 리뷰 목록 조회 (최신순)
      */
     @Query("""
-            select new umc.server.domain.review.dto.response.ReviewResponse.MyReview(
+            select new umc.server.domain.review.dto.response.ReviewResponse$MyReview(
                 r.id,
                 s.name,
                 r.star,
@@ -48,7 +48,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
      * [STAR 정렬] 내가 작성한 리뷰 목록 조회 (별점 높은 순, 같은 별점이면 최신순)
      */
     @Query("""
-            select new umc.server.domain.review.dto.response.ReviewResponse.MyReview(
+            select new umc.server.domain.review.dto.response.ReviewResponse$MyReview(
                 r.id,
                 s.name,
                 r.star,

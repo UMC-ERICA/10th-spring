@@ -64,13 +64,14 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     );
 
     @Query("""
-            select new umc.server.domain.store.dto.response.MissionResDTO.GetMission(
+            select new umc.server.domain.store.dto.response.MissionResDTO$GetMission(
                 m.id,
                 m.point,
                 m.missionContent
             )
             from Mission m
             where m.store.id = :storeId
+              and m.deletedAt is null
             order by m.createdAt desc
             """)
     List<MissionResDTO.GetMission> findAllByStoreId(@Param("storeId") Long storeId);

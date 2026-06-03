@@ -1,4 +1,7 @@
 package umc.server.domain.member.repository;
 
-public class TermConditionRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import umc.server.domain.member.entity.TermCondition;
+
+public interface TermConditionRepository extends JpaRepository<TermCondition, Long> {
 }

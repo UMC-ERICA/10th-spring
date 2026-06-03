@@ -1,10 +1,9 @@
 package umc.server.domain.mission.exception;
 
+import lombok.Getter;
 import umc.server.global.apiPayload.code.BaseErrorCode;
 
-/**
- * 미션 도메인 전용 예외 클래스
- */
+@Getter
 public class MissionException extends RuntimeException {
 
     private final BaseErrorCode code;
@@ -14,7 +13,4 @@ public class MissionException extends RuntimeException {
         this.code = code;
     }
 
-    public BaseErrorCode getCode() {
-        return code;
-    }
 }

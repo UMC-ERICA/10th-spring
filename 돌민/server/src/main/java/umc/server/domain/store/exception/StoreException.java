@@ -1,7 +1,9 @@
 package umc.server.domain.store.exception;
 
+import lombok.Getter;
 import umc.server.global.apiPayload.code.BaseErrorCode;
 
+@Getter
 public class StoreException extends RuntimeException {
 
     private final BaseErrorCode code;
@@ -11,7 +13,4 @@ public class StoreException extends RuntimeException {
         this.code = code;
     }
 
-    public BaseErrorCode getCode() {
-        return code;
-    }
 }

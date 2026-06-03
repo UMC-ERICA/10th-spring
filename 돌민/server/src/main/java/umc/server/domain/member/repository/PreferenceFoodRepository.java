@@ -1,4 +1,7 @@
 package umc.server.domain.member.repository;
 
-public class PreferenceFoodRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import umc.server.domain.member.entity.PreferenceFood;
+
+public interface PreferenceFoodRepository extends JpaRepository<PreferenceFood, Long> {
 }
