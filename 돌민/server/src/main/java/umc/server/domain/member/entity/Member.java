@@ -65,6 +65,9 @@ public class Member extends BaseEntity {
     @Column(name = "social_type", nullable = false, length = 30)
     private SocialType socialType;
 
+    @Column(name = "social_uid", length = 100)
+    private String socialUid;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<MemberAddress> addresses = new ArrayList<>();

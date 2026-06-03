@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import umc.server.domain.member.dto.request.MemberLoginRequest;
 import umc.server.domain.member.dto.request.MemberSignUpRequest;
+import umc.server.domain.member.dto.response.MemberLoginResponse;
 import umc.server.domain.member.service.MemberService;
 import umc.server.global.apiPayload.ApiResponse;
 
@@ -21,5 +23,10 @@ public class MemberAuthController {
     public ApiResponse<Void> signUp(@Valid @RequestBody MemberSignUpRequest request) {
         memberService.signUp(request);
         return ApiResponse.onSuccess();
+    }
+
+    @PostMapping("/login")
+    public ApiResponse<MemberLoginResponse> login(@Valid @RequestBody MemberLoginRequest request) {
+        return ApiResponse.onSuccess(memberService.login(request));
     }
 }
