@@ -44,15 +44,15 @@ public class Member extends BaseEntity {
     @Builder.Default
     private Gender gender = Gender.NONE;
 
-    @Column(name = "birth", nullable = false)
+    @Column(name = "birth", nullable = true)
     private LocalDate birth;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Address address = Address.NONE;
 
-    @Column(name = "detil_address", nullable = false)
+    @Column(name = "detil_address")
     private String detailAddress;
 
     @Column(name = "social_uid")
@@ -62,7 +62,7 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
-    @Column(name = "point", nullable = false)
+    @Column(name = "point")
     private int point;
 
     @Column(name = "email", nullable = false)
@@ -71,19 +71,10 @@ public class Member extends BaseEntity {
     @Column(name = "phone_number", nullable = true)
     private String phoneNumber;
 
-    @Column(name = "profile_url", nullable = false)
+    @Column(name = "profile_url", nullable = true)
     private String profileUrl;
 
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "pw",nullable = false)
+    @Column(name = "pw",nullable = true)
     private String pw;
 
     //Spring Security

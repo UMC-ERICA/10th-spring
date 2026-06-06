@@ -36,7 +36,7 @@ public class CustomOAuthService extends DefaultOAuth2UserService {
         String socialUid;
         Map<String, Object> attributes = oAuthMember.getAttributes();
         Map<String, Object> KakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        Map<String, Object> profile = (Map<String, Object>) attributes.get("profile");
+        Map<String, Object> profile = (Map<String, Object>) KakaoAccount.get("profile");
         try{
             providerId = SocialType.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
             socialUid = String.valueOf((Long) oAuthMember.getAttributes().get("id"));
@@ -48,7 +48,7 @@ public class CustomOAuthService extends DefaultOAuth2UserService {
         OAuthDTO dto;
         switch (providerId){ //값에 따라 분기
             case  KAKAO -> {
-                String email = attributes.get("email").toString();
+                String email = KakaoAccount.get("email").toString();
                 String name = profile.get("nickname").toString();
                 dto = new KakaoDTO(socialUid, email, name);
             }
