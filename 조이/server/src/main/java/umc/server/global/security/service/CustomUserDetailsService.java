@@ -13,7 +13,7 @@ import umc.server.global.security.entity.AuthMember;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
