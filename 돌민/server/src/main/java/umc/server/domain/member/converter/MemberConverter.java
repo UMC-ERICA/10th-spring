@@ -2,6 +2,7 @@ package umc.server.domain.member.converter;
 
 import umc.server.domain.member.dto.request.MemberSignUpRequest;
 import umc.server.domain.member.entity.Member;
+import umc.server.global.security.dto.OAuthDTO;
 import umc.server.domain.member.entity.MemberAddress;
 import umc.server.domain.member.entity.MemberTermCondition;
 import umc.server.domain.member.entity.PreferenceFood;
@@ -15,11 +16,23 @@ public class MemberConverter {
         return Member.builder()
                 .name(request.name())
                 .email(request.email())
-                .password(encodedPassword)        // 암호화된 비밀번호 저장
+                .password(encodedPassword)
                 .phone(request.phone())
                 .gender(request.gender())
                 .birth(request.birth())
-                .socialType(SocialType.LOCAL)     // 이메일 회원가입 = 로컬(소셜 아님)
+                .socialType(SocialType.LOCAL)
+                .socialUid(request.email())       // LOCAL은 email을 socialUid로 사용
+                .build();
+    }
+
+    public static Member toMember(OAuthDTO dto) {
+        return Member.builder()
+                .name(dto.getName())
+                .email(dto.getSocialEmail())
+                .password("")
+                .phone("")
+                .socialType(dto.getSocialType())
+                .socialUid(dto.getSocialUid())
                 .build();
     }
 

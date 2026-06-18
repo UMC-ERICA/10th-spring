@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.inquiry.repository.InquiryRepository;
 import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.request.HomeSearchRequest;
+import umc.server.domain.member.dto.request.MemberLoginRequest;
 import umc.server.domain.member.dto.request.MemberSignUpRequest;
 import umc.server.domain.member.dto.response.HomeResponse;
 import umc.server.domain.member.dto.response.MemberLocationResponse;
+import umc.server.domain.member.dto.response.MemberLoginResponse;
 import umc.server.domain.member.dto.response.MemberPointResponse;
 import umc.server.domain.member.dto.response.MissionHomeResponse;
 import umc.server.domain.member.dto.response.MyPageResponse;
@@ -37,6 +39,8 @@ import umc.server.domain.notification.dto.response.CompletedMissionCountResponse
 import umc.server.domain.notification.repository.AlarmRepository;
 import umc.server.domain.review.repository.ReviewRepository;
 import umc.server.global.apiPayload.PageResponse;
+import umc.server.global.security.entity.AuthMember;
+import umc.server.global.security.util.JwtUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +57,19 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final TermConditionRepository termConditionRepository;
     private final PreferenceFoodRepository preferenceFoodRepository;
+    private final JwtUtil jwtUtil;
+
+    public MemberLoginResponse login(MemberLoginRequest request) {
+        Member member = memberRepository.findByEmail(request.email())
+                .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+
+        if (!passwordEncoder.matches(request.password(), member.getPassword())) {
+            throw new MemberException(MemberErrorCode.INVALID_PASSWORD);
+        }
+
+        String token = jwtUtil.createAccessToken(new AuthMember(member));
+        return new MemberLoginResponse(token);
+    }
 
     @Transactional
     public void signUp(MemberSignUpRequest request) {
@@ -76,7 +93,7 @@ public class MemberService {
         // 5. 약관 동의 저장
         for (var agreement : request.termAgreements()) {
             TermCondition termCondition = termConditionRepository.findById(agreement.termConditionId())
-                    .orElseThrow(() -> new RuntimeException("해당 약관이 존재하지 않습니다."));
+                    .orElseThrow(() -> new MemberException(MemberErrorCode.TERM_NOT_FOUND));
             MemberTermCondition mtc = MemberConverter.toMemberTermCondition(termCondition, agreement.isAgreed(), member);
             member.addTermCondition(mtc);
         }
